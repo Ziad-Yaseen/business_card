@@ -9,7 +9,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
 
 class SplashScreen extends StatelessWidget {
-  const new({super.key});
+  const SplashScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
