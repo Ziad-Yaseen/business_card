@@ -2,6 +2,8 @@ import 'package:business_card/core/constants/app_colors.dart';
 import 'package:business_card/features/onboarding/cubit/onboarding_cubit.dart';
 import 'package:business_card/features/onboarding/widgets/card_data.dart';
 import 'package:business_card/features/onboarding/widgets/card_one.dart';
+import 'package:business_card/features/onboarding/widgets/card_three.dart';
+import 'package:business_card/features/onboarding/widgets/card_two.dart';
 import 'package:business_card/features/onboarding/widgets/my_app_icon_widget.dart';
 import 'package:business_card/features/onboarding/widgets/page_dots.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +18,7 @@ class OnboardingView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => OnboardingCubit(), 
+      create: (context) => OnboardingCubit(),
       child: _OnboardingView(onFinish: () {}),
     );
   }
@@ -42,14 +44,14 @@ class _OnboardingViewState extends State<_OnboardingView> {
     ),
 
     const CardData(
-      card: SizedBox(),
+      card: CardTwo(),
       color: Color(0xFFD9E2FB),
       title: 'Share with a scan.',
       subTitle: 'Show the QR code or send the link. They see your card in any browser, no app needed.',
     ),
 
     const CardData(
-      card: SizedBox(),
+      card: CardThree(),
       color: Color(0xFFD6E9DE),
       title: 'A card for every side of you.',
       subTitle: 'Keep separate cards for work, freelance and personal, each with its own look.',
