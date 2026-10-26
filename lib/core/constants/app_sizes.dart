@@ -50,3 +50,26 @@ class AppSizes {
   static double fontSize32 = 32.0.sp;
   static double fontSize60 = 60.0.sp;
 }
+
+
+
+class AppRadius {
+  const AppRadius._();
+  static const sm = 14.0;
+  static const md = 18.0;
+  static const lg = 22.0;
+  static const card = 26.0;
+  static const sheet = 32.0;
+  static const pill = 999.0;
+}
+
+class AppSpacing {
+  const AppSpacing._();
+  static const screen = 24.0;
+  static const xs = 4.0;
+  static const sm = 8.0;
+  static const md = 12.0;
+  static const lg = 16.0;
+  static const xl = 24.0;
+  static const xxl = 32.0;
+}
