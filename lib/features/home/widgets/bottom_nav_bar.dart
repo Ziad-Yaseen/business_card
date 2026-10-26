@@ -60,7 +60,7 @@ class AppBottomNavBar extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               for (int i = 0; i < items.length; i++) ...[
-                if (i != 0) Gap(3.w),
+                if (i != 0) Gap(8.w),
                 items[i].isPrimary
                     ? _PrimaryButton(item: items[i], onTap: () => onTap(i))
                     : _NavItemWidget(
