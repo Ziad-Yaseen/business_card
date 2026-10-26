@@ -1,4 +1,7 @@
 import 'package:business_card/core/constants/app_colors.dart';
+import 'package:business_card/core/helpers/prefs_helper.dart';
+import 'package:business_card/core/keys/prefs_keys.dart';
+import 'package:business_card/core/routes/route_names.dart';
 import 'package:business_card/features/onboarding/cubit/onboarding_cubit.dart';
 import 'package:business_card/features/onboarding/widgets/card_data.dart';
 import 'package:business_card/features/onboarding/widgets/card_one.dart';
@@ -10,6 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class OnboardingView extends StatelessWidget {
@@ -19,7 +23,13 @@ class OnboardingView extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => OnboardingCubit(),
-      child: _OnboardingView(onFinish: () {}),
+      child: _OnboardingView(
+        onFinish: () async {
+          await PrefsHelper.setBool(PrefsKeys.onboardingDone, true);
+          if (!context.mounted) return;
+          context.go(RouteNames.home);
+        },
+      ),
     );
   }
 }
