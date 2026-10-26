@@ -1,5 +1,5 @@
 import 'package:business_card/core/routes/route_names.dart';
-import 'package:business_card/features/home/screens/home_view.dart';
+import 'package:business_card/features/main_layout/screens/main_layout.dart';
 import 'package:business_card/features/onboarding/screens/onboarding_view.dart';
 import 'package:business_card/features/splash/screens/splash_screen.dart';
 import 'package:flutter/material.dart';
@@ -26,7 +26,7 @@ class AppRouter {
         name: RouteNames.home,
         pageBuilder: (context, state) => CustomTransitionPage(
           key: state.pageKey,
-          child: const HomeView(),
+          child: const MainLayout(),
           transitionsBuilder: (context, animation, secondaryAnimation, child) =>
               FadeTransition(opacity: animation, child: child),
         ),
@@ -37,7 +37,7 @@ class AppRouter {
         name: RouteNames.onboarding,
         pageBuilder: (context, state) => CustomTransitionPage(
           key: state.pageKey,
-          child: OnboardingView(),
+          child: const OnboardingView(),
           transitionsBuilder: (context, animation, secondaryAnimation, child) =>
               FadeTransition(opacity: animation, child: child),
         ),
