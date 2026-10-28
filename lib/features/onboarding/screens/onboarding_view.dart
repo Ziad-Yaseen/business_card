@@ -102,6 +102,7 @@ class _OnboardingViewState extends State<_OnboardingView> {
                   child: TextButton(
                     style: TextButton.styleFrom(
                       overlayColor: AppAccent.bg[0].withValues(alpha: 0.5),
+                      backgroundColor: Colors.transparent,
                     ),
                     onPressed: widget.onFinish,
                     child: Text(

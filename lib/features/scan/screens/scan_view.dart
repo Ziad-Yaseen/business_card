@@ -5,6 +5,6 @@ class ScanView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const SizedBox.expand(child: Text('Ziad Scan'));
+    return const SizedBox.expand(child: Center(child: Text('Ziad Scan')));
   }
 }

@@ -5,8 +5,6 @@ class ContactsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const SizedBox.expand(
-      child: Text('Ziad Contacts'),
-    );
+    return const SizedBox.expand(child: Center(child: Text('Ziad Contacts')));
   }
 }

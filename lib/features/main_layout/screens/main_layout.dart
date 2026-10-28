@@ -6,6 +6,7 @@ import 'package:business_card/features/scan/screens/scan_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:iconsax/iconsax.dart';
 
 class MainLayout extends StatelessWidget {
   const MainLayout({super.key});
@@ -28,13 +29,13 @@ class _MainLayoutScaffold extends StatefulWidget {
 
 class _MainLayoutScaffoldState extends State<_MainLayoutScaffold> {
   static const _items = [
-    AppBottomNavItem(icon: Icons.style_outlined, label: 'Cards'),
+    AppBottomNavItem(icon: Iconsax.cards, label: 'Cards'),
     AppBottomNavItem(
-      icon: Icons.qr_code_2_rounded,
+      icon: Iconsax.scan_barcode,
       label: 'Scan',
       isPrimary: true,
     ),
-    AppBottomNavItem(icon: Icons.group_outlined, label: 'Contacts'),
+    AppBottomNavItem(icon: Iconsax.profile_2user, label: 'Contacts'),
   ];
 
   static const _pages = <Widget>[HomeView(), ScanView(), ContactsView()];

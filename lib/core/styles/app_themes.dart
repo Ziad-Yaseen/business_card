@@ -2,6 +2,7 @@ import 'package:business_card/core/constants/app_colors.dart';
 import 'package:business_card/core/styles/app_text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class AppThemes {
   static ThemeData light = ThemeData(
@@ -35,7 +36,14 @@ class AppThemes {
 
     textButtonTheme: TextButtonThemeData(
       style: TextButton.styleFrom(
-        textStyle: AppTextStyles.fillefButtonText(true),
+        iconColor: const Color(0xffFFFFFF),
+        backgroundColor: AppAccent.splashBg,
+        overlayColor: AppAccent.splashBg.withValues(alpha: 0.4),
+        foregroundColor: const Color(0xFFFFFFFF),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadiusGeometry.circular(9999),
+        ),
+        textStyle: GoogleFonts.dmSans(fontSize: 16.sp, fontWeight: .w700),
       ),
     ),
 
