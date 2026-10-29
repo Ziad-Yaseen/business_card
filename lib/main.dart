@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await PrefsHelper.init();
-  // This is for testing purposes only. Remove it in production.
+  // TODO: Remove this line after testing
   PrefsHelper.setBool(PrefsKeys.onboardingDone, false);
   runApp(const BusinessCard());
 }
