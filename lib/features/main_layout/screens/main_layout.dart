@@ -121,16 +121,3 @@ class _KeepAliveState extends State<_KeepAlive>
     return widget.child;
   }
 }
-
-class _TabPlaceholder extends StatelessWidget {
-  const _TabPlaceholder(this.title);
-
-  final String title;
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Text(title, style: Theme.of(context).textTheme.headlineMedium),
-    );
-  }
-}
