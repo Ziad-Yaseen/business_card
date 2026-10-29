@@ -1,6 +1,7 @@
 import 'package:business_card/core/components/card_patterns.dart';
 
 class CardModel {
+  final String id;
   final int cardColor;
   final CardPattern pattern;
   final String firstName;
@@ -22,6 +23,7 @@ class CardModel {
   final bool mine;
 
   const CardModel({
+    required this.id,
     required this.cardColor,
     required this.pattern,
     required this.firstName,
@@ -42,6 +44,39 @@ class CardModel {
     this.tiktok,
     this.mine = true,
   });
+
+  String get fullName => [
+    firstName,
+    middleName,
+    lastName,
+  ].where((s) => s != null && s.trim().isNotEmpty).join(' ');
+
+  String get shareName =>
+      [firstName, lastName].where((s) => s.trim().isNotEmpty).join(' ');
+
+  Map<String, dynamic> toShareJson() =>
+      {
+        'c': cardColor,
+        'p': pattern.name,
+        'n': shareName,
+        'j': jobTitle,
+        'cp': company,
+        'e': email,
+        'ph': phone,
+        'l': linkedIn,
+        'g': github,
+        'pf': portfolio,
+        'i': instagram,
+        'f': facebook,
+        'x': x,
+        't': tiktok,
+        'm': more,
+      }..removeWhere(
+        (_, v) =>
+            v == null ||
+            (v is String && v.trim().isEmpty) ||
+            (v is List && v.isEmpty),
+      );
 
   Map<String, dynamic> toJson() => {
     'c': cardColor,
@@ -65,9 +100,15 @@ class CardModel {
     'my': mine,
   };
 
-  factory CardModel.fromJson(Map<String, dynamic> json) => CardModel(
+  factory CardModel.fromJson(
+    Map<String, dynamic> json, {
+    String? id,
+    bool? mine,
+  }) => CardModel(
+    id: id ?? json['id'] as String,
     cardColor: json['c'] as int,
-    pattern: CardPattern.values.firstWhere((e) => e.name == json['p']),
+    pattern:
+        CardPattern.values.asNameMap()[json['p']] ?? CardPattern.values.first,
     firstName: json['fN'] as String,
     lastName: json['lN'] as String,
     middleName: json['mN'] as String?,
@@ -86,4 +127,50 @@ class CardModel {
     more: json['m'] != null ? List<String>.from(json['m']) : null,
     mine: json['my'],
   );
+
+  CardModel copyWith({
+    int? cardColor,
+    CardPattern? pattern,
+    String? tag,
+    String? tagline,
+    String? firstName,
+    String? lastName,
+    String? middleName,
+    String? nickName,
+    String? jobTitle,
+    String? company,
+    List<String>? email,
+    List<String>? phone,
+    String? linkedIn,
+    String? github,
+    String? portfolio,
+    String? instagram,
+    String? facebook,
+    String? x,
+    String? tiktok,
+    List<String>? more,
+  }) {
+    return CardModel(
+      id: id,
+      cardColor: cardColor ?? this.cardColor,
+      pattern: pattern ?? this.pattern,
+      firstName: firstName ?? this.firstName,
+      lastName: lastName ?? this.lastName,
+      middleName: middleName ?? this.middleName,
+      nickName: nickName ?? this.nickName,
+      jobTitle: jobTitle ?? this.jobTitle,
+      company: company ?? this.company,
+      email: email ?? this.email,
+      phone: phone ?? this.phone,
+      linkedIn: linkedIn ?? this.linkedIn,
+      github: github ?? this.github,
+      portfolio: portfolio ?? this.portfolio,
+      instagram: instagram ?? this.instagram,
+      facebook: facebook ?? this.facebook,
+      x: x ?? this.x,
+      tiktok: tiktok ?? this.tiktok,
+      more: more ?? this.more,
+      mine: mine,
+    );
+  }
 }
