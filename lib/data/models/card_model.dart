@@ -19,6 +19,7 @@ class CardModel {
   final String? x;
   final String? tiktok;
   final List<String>? more;
+  final bool mine;
 
   const CardModel({
     required this.cardColor,
@@ -39,6 +40,7 @@ class CardModel {
     this.x,
     this.more,
     this.tiktok,
+    this.mine = true,
   });
 
   Map<String, dynamic> toJson() => {
@@ -60,6 +62,7 @@ class CardModel {
     'x': x,
     't': tiktok,
     'm': more,
+    'my': mine,
   };
 
   factory CardModel.fromJson(Map<String, dynamic> json) => CardModel(
@@ -80,6 +83,7 @@ class CardModel {
     facebook: json['f'] as String?,
     x: json['x'] as String?,
     tiktok: json['t'] as String?,
-    more: json[''] != null ? List<String>.from(json['more']) : null,
+    more: json['m'] != null ? List<String>.from(json['m']) : null,
+    mine: json['my'],
   );
 }
