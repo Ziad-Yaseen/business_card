@@ -83,6 +83,7 @@ class _MainLayoutScaffoldState extends State<_MainLayoutScaffold> {
             if (!didPop) _goTo(0);
           },
           child: Scaffold(
+            extendBody: true,
             body: PageView(
               controller: _controller,
               onPageChanged: _onPageChanged,

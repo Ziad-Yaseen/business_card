@@ -15,29 +15,32 @@ class HomeAppBar extends StatelessWidget {
     final String cards = numberOfCards == 0
         ? 'Nothing here yet'
         : '$numberOfCards cards · saved on this device';
-    return SizedBox(
-      width: double.infinity,
-      child: Row(
-        mainAxisAlignment: .spaceBetween,
-        children: [
-          Column(
-            crossAxisAlignment: .start,
-            children: [
-              Text(title, style: AppTextStyles.appbarTItle(true)),
-              // Gap(8.h),
-              Text(
-                cards,
-                style: GoogleFonts.dmSans(
-                  fontSize: 15.sp,
-                  fontWeight: .normal,
-                  letterSpacing: -0.38,
-                  color: const Color(0xFF5F636A),
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 24.0.w),
+      child: SizedBox(
+        width: double.infinity,
+        child: Row(
+          mainAxisAlignment: .spaceBetween,
+          children: [
+            Column(
+              crossAxisAlignment: .start,
+              children: [
+                Text(title, style: AppTextStyles.appbarTItle(true)),
+                // Gap(8.h),
+                Text(
+                  cards,
+                  style: GoogleFonts.dmSans(
+                    fontSize: 15.sp,
+                    fontWeight: .normal,
+                    letterSpacing: -0.38,
+                    color: const Color(0xFF5F636A),
+                  ),
                 ),
-              ),
-            ],
-          ),
-          const ItemContainer(child: Icon(Iconsax.setting_4)),
-        ],
+              ],
+            ),
+            const ItemContainer(child: Icon(Iconsax.setting_4)),
+          ],
+        ),
       ),
     );
   }

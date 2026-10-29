@@ -12,78 +12,82 @@ class NoCardsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        const _NoCardsStack(),
-        Gap(45.h),
-        Text(
-          'Make your first card',
-          style: GoogleFonts.bricolageGrotesque(
-            fontSize: 28.sp,
-            fontWeight: .w700,
-            letterSpacing: -0.56,
-            color: const Color(0xFF15171A),
-          ),
-        ),
-        Gap(9.37.h),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 28.0),
-          child: Text(
-            'Add your details once, then share them with a QR code or a link. No account needed.',
-            textAlign: .center,
-            style: GoogleFonts.dmSans(
-              color: const Color(0xFF5F636A),
-              fontSize: 15.sp,
-              fontWeight: .normal,
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 24.0.w),
+      child: Column(
+        children: [
+          Gap(32.h),
+          const _NoCardsStack(),
+          Gap(45.h),
+          Text(
+            'Make your first card',
+            style: GoogleFonts.bricolageGrotesque(
+              fontSize: 28.sp,
+              fontWeight: .w700,
+              letterSpacing: -0.56,
+              color: const Color(0xFF15171A),
             ),
           ),
-        ),
-        Gap(28.h),
-        Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(9999),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withValues(alpha: 0.1),
-                offset: const Offset(0, 10),
-                blurRadius: 15,
-                spreadRadius: -3,
-              ),
-              BoxShadow(
-                offset: const Offset(0, 4),
-                blurRadius: 6,
-                spreadRadius: -4,
-                color: Colors.black.withValues(alpha: 0.1),
-              ),
-            ],
-          ),
-          child: TextButton.icon(
-            style: TextButton.styleFrom(
-              minimumSize: Size(double.infinity, 56.h),
-            ),
-            onPressed: () {},
-            label: const Text('Create a card'),
-            icon: Icon(Icons.add, size: 22.sp),
-          ),
-        ),
-        Gap(14.h),
-        Row(
-          mainAxisAlignment: .center,
-          mainAxisSize: .min,
-          children: [
-            Icon(Iconsax.lock, color: const Color(0xFF5F636A), size: 12.sp),
-            Gap(6.w),
-            Text(
-              'Saved only on this device',
+          Gap(9.37.h),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 28.0),
+            child: Text(
+              'Add your details once, then share them with a QR code or a link. No account needed.',
+              textAlign: .center,
               style: GoogleFonts.dmSans(
                 color: const Color(0xFF5F636A),
-                fontSize: 12.sp,
+                fontSize: 15.sp,
                 fontWeight: .normal,
               ),
             ),
-          ],
-        ),
-      ],
+          ),
+          Gap(28.h),
+          Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(9999),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withValues(alpha: 0.1),
+                  offset: const Offset(0, 10),
+                  blurRadius: 15,
+                  spreadRadius: -3,
+                ),
+                BoxShadow(
+                  offset: const Offset(0, 4),
+                  blurRadius: 6,
+                  spreadRadius: -4,
+                  color: Colors.black.withValues(alpha: 0.1),
+                ),
+              ],
+            ),
+            child: TextButton.icon(
+              style: TextButton.styleFrom(
+                minimumSize: Size(double.infinity, 56.h),
+              ),
+              onPressed: () {},
+              label: const Text('Create a card'),
+              icon: Icon(Icons.add, size: 22.sp),
+            ),
+          ),
+          Gap(14.h),
+          Row(
+            mainAxisAlignment: .center,
+            mainAxisSize: .min,
+            children: [
+              Icon(Iconsax.lock, color: const Color(0xFF5F636A), size: 12.sp),
+              Gap(6.w),
+              Text(
+                'Saved only on this device',
+                style: GoogleFonts.dmSans(
+                  color: const Color(0xFF5F636A),
+                  fontSize: 12.sp,
+                  fontWeight: .normal,
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }
