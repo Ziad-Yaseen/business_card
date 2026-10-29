@@ -15,7 +15,7 @@ class HomeView extends StatelessWidget {
       child: Column(
         children: [
           const HomeAppBar(numberOfCards: 3),
-          Expanded(child: CardsViewWidget()),
+          Expanded(child: NoCardsWidget()),
         ],
       ),
     );

@@ -1,9 +1,11 @@
 import 'package:business_card/core/components/card_patterns.dart';
 import 'package:business_card/core/components/card_preview.dart';
+import 'package:business_card/core/routes/route_names.dart';
 import 'package:business_card/features/onboarding/widgets/page_dots.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
+import 'package:go_router/go_router.dart';
 
 class CardsViewWidget extends StatefulWidget {
   const CardsViewWidget({super.key});
@@ -42,7 +44,11 @@ class _CardsViewWidgetState extends State<CardsViewWidget> {
         Gap(26.h),
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 24.w),
-          child: _NewCardButton(onTap: () {}),
+          child: _NewCardButton(
+            onTap: () {
+              context.push(RouteNames.create);
+            },
+          ),
         ),
         Gap(24.h),
       ],

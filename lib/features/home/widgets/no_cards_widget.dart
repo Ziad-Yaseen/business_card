@@ -1,9 +1,11 @@
 import 'dart:math' as math;
 import 'dart:ui';
 
+import 'package:business_card/core/routes/route_names.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
 
@@ -42,50 +44,9 @@ class NoCardsWidget extends StatelessWidget {
             ),
           ),
           Gap(28.h),
-          Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(9999),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withValues(alpha: 0.1),
-                  offset: const Offset(0, 10),
-                  blurRadius: 15,
-                  spreadRadius: -3,
-                ),
-                BoxShadow(
-                  offset: const Offset(0, 4),
-                  blurRadius: 6,
-                  spreadRadius: -4,
-                  color: Colors.black.withValues(alpha: 0.1),
-                ),
-              ],
-            ),
-            child: TextButton.icon(
-              style: TextButton.styleFrom(
-                minimumSize: Size(double.infinity, 56.h),
-              ),
-              onPressed: () {},
-              label: const Text('Create a card'),
-              icon: Icon(Icons.add, size: 22.sp),
-            ),
-          ),
+          const _CreateCardButton(),
           Gap(14.h),
-          Row(
-            mainAxisAlignment: .center,
-            mainAxisSize: .min,
-            children: [
-              Icon(Iconsax.lock, color: const Color(0xFF5F636A), size: 12.sp),
-              Gap(6.w),
-              Text(
-                'Saved only on this device',
-                style: GoogleFonts.dmSans(
-                  color: const Color(0xFF5F636A),
-                  fontSize: 12.sp,
-                  fontWeight: .normal,
-                ),
-              ),
-            ],
-          ),
+          const _SafeRow(),
         ],
       ),
     );
@@ -302,4 +263,63 @@ class _DashedRRectPainter extends CustomPainter {
       old.radius != radius ||
       old.dash != dash ||
       old.gap != gap;
+}
+
+class _CreateCardButton extends StatelessWidget {
+  const _CreateCardButton();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(9999),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.1),
+            offset: const Offset(0, 10),
+            blurRadius: 15,
+            spreadRadius: -3,
+          ),
+          BoxShadow(
+            offset: const Offset(0, 4),
+            blurRadius: 6,
+            spreadRadius: -4,
+            color: Colors.black.withValues(alpha: 0.1),
+          ),
+        ],
+      ),
+      child: TextButton.icon(
+        style: TextButton.styleFrom(minimumSize: Size(double.infinity, 56.h)),
+        onPressed: () {
+          context.push(RouteNames.create);
+        },
+        label: const Text('Create a card'),
+        icon: Icon(Icons.add, size: 22.sp),
+      ),
+    );
+  }
+}
+
+class _SafeRow extends StatelessWidget {
+  const _SafeRow();
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: .center,
+      mainAxisSize: .min,
+      children: [
+        Icon(Iconsax.lock, color: const Color(0xFF5F636A), size: 12.sp),
+        Gap(6.w),
+        Text(
+          'Saved only on this device',
+          style: GoogleFonts.dmSans(
+            color: const Color(0xFF5F636A),
+            fontSize: 12.sp,
+            fontWeight: .normal,
+          ),
+        ),
+      ],
+    );
+  }
 }
