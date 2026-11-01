@@ -1,5 +1,6 @@
 import 'package:business_card/core/components/card_patterns.dart';
 import 'package:business_card/core/components/main_card_preview.dart';
+import 'package:business_card/core/components/main_text_field_with_laabel.dart';
 import 'package:business_card/core/constants/app_colors.dart';
 import 'package:business_card/features/create_card/cubit/tab_cubit.dart';
 import 'package:business_card/features/create_card/widgets/color_selector.dart';
@@ -145,7 +146,7 @@ class _LookTab extends StatelessWidget {
           ),
         ),
         Gap(12.h),
-        PatternSelector(),
+        const PatternSelector(),
       ],
     );
   }
@@ -156,7 +157,46 @@ class _DetailsTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Column();
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          Row(
+            children: [
+              Expanded(
+                child: MainTextField(title: 'First name', subTitle: 'Required'),
+              ),
+              Gap(14.w),
+              Expanded(
+                child: MainTextField(title: 'last name', subTitle: 'Required'),
+              ),
+            ],
+          ),
+
+          Gap(14.h),
+          Row(
+            children: [
+              Expanded(
+                child: MainTextField(
+                  title: 'Middle name',
+                  subTitle: 'Optional',
+                ),
+              ),
+              Gap(14.w),
+              Expanded(
+                child: MainTextField(title: 'Nick name', subTitle: 'Optional'),
+              ),
+            ],
+          ),
+          Gap(14.h),
+          MainTextField(title: 'Job title', subTitle: 'Required'),
+
+          Gap(14.h),
+          MainTextField(title: 'Company', subTitle: 'Optional'),
+
+          Gap(14.h),
+        ],
+      ),
+    );
   }
 }
 
@@ -165,6 +205,20 @@ class _LinksTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Column();
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          MainTextField(title: 'LinkedIn', subTitle: 'Required'),
+
+          Gap(14.h),
+          MainTextField(title: 'GitHub', subTitle: 'Optional'),
+
+          Gap(14.h),
+          MainTextField(title: 'Portfolio', subTitle: 'Optional'),
+
+          Gap(14.h),
+        ],
+      ),
+    );
   }
 }

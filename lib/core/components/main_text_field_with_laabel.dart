@@ -20,16 +20,16 @@ class MainTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      mainAxisSize: .min,
+      mainAxisSize: MainAxisSize.min,
       children: [
         Row(
-          mainAxisAlignment: .spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
               title,
               style: GoogleFonts.dmSans(
                 fontSize: 13.sp,
-                fontWeight: .w600,
+                fontWeight: FontWeight.w600,
                 color: AppAccent.primaryText[0],
               ),
             ),
@@ -38,7 +38,7 @@ class MainTextField extends StatelessWidget {
               style: GoogleFonts.dmSans(
                 fontSize: 13.sp,
                 color: const Color(0xFF5F636A),
-                fontWeight: .w500,
+                fontWeight: FontWeight.w500,
               ),
             ),
           ],
