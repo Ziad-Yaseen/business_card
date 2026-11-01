@@ -18,6 +18,7 @@ class MainBackButton extends StatelessWidget {
         ],
       ),
       child: IconButton(
+        tooltip: 'Back',
         style: IconButton.styleFrom(
           backgroundColor: Colors.white,
           shape: RoundedRectangleBorder(

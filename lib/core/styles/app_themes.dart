@@ -58,7 +58,23 @@ class AppThemes {
       filled: true,
       isDense: false,
       floatingLabelBehavior: FloatingLabelBehavior.never,
-      contentPadding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 14.w),
+      contentPadding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 12.5.w),
+      fillColor: Colors.white,
+
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(14.r),
+        borderSide: const BorderSide(color: Color(0xFFD8D2C3)),
+      ),
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(14.r),
+        borderSide: const BorderSide(color: Color(0xFFD8D2C3)),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(14.r),
+        borderSide: BorderSide(
+          color: Color.lerp(const Color(0xFFD8D2C3), Colors.black, 0.2)!,
+        ),
+      ),
     ),
 
     chipTheme: ChipThemeData(

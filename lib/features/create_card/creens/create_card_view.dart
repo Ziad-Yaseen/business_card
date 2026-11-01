@@ -5,6 +5,8 @@ import 'package:business_card/core/constants/app_colors.dart';
 import 'package:business_card/features/create_card/cubit/tab_cubit.dart';
 import 'package:business_card/features/create_card/widgets/color_selector.dart';
 import 'package:business_card/features/create_card/widgets/create_card_app_bar.dart';
+import 'package:business_card/features/create_card/widgets/more_profiles_section.dart';
+import 'package:business_card/features/create_card/widgets/multi_field_section.dart';
 import 'package:business_card/features/create_card/widgets/pattern_selector.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -162,12 +164,20 @@ class _DetailsTab extends StatelessWidget {
         children: [
           Row(
             children: [
-              Expanded(
-                child: MainTextField(title: 'First name', subTitle: 'Required'),
+              const Expanded(
+                child: MainTextField(
+                  title: 'First name',
+                  subTitle: 'Required',
+                  hint: 'e.g. Ziad',
+                ),
               ),
               Gap(14.w),
-              Expanded(
-                child: MainTextField(title: 'last name', subTitle: 'Required'),
+              const Expanded(
+                child: MainTextField(
+                  title: 'last name',
+                  subTitle: 'Required',
+                  hint: 'e.g. Yaseen',
+                ),
               ),
             ],
           ),
@@ -175,25 +185,51 @@ class _DetailsTab extends StatelessWidget {
           Gap(14.h),
           Row(
             children: [
-              Expanded(
+              const Expanded(
                 child: MainTextField(
                   title: 'Middle name',
                   subTitle: 'Optional',
+                  hint: 'e.g. Ali',
                 ),
               ),
               Gap(14.w),
-              Expanded(
-                child: MainTextField(title: 'Nick name', subTitle: 'Optional'),
+              const Expanded(
+                child: MainTextField(
+                  title: 'Nick name',
+                  subTitle: 'Optional',
+                  hint: 'e.g. Zee',
+                ),
               ),
             ],
           ),
           Gap(14.h),
-          MainTextField(title: 'Job title', subTitle: 'Required'),
+          const MainTextField(
+            title: 'Job title',
+            subTitle: 'Required',
+            hint: 'e.g. Flutter Developer',
+          ),
 
           Gap(14.h),
-          MainTextField(title: 'Company', subTitle: 'Optional'),
+          const MainTextField(
+            title: 'Company',
+            subTitle: 'Optional',
+            hint: 'e.g. Acme Labs',
+          ),
 
           Gap(14.h),
+          MultiFieldSection(
+            title: 'Email',
+            hint: 'ziad@example.com',
+            addLabel: 'Add another email',
+            onChanged: (emails) {},
+          ),
+
+          MultiFieldSection(
+            title: 'Phone',
+            hint: '01080173273',
+            addLabel: 'Add another phone',
+            onChanged: (emails) {},
+          ),
         ],
       ),
     );
@@ -208,15 +244,36 @@ class _LinksTab extends StatelessWidget {
     return SingleChildScrollView(
       child: Column(
         children: [
-          MainTextField(title: 'LinkedIn', subTitle: 'Required'),
+          const MainTextField(
+            title: 'LinkedIn',
+            subTitle: 'Required',
+            hint: 'linkedin.com/in/your-name',
+          ),
 
           Gap(14.h),
-          MainTextField(title: 'GitHub', subTitle: 'Optional'),
+          const MainTextField(
+            title: 'GitHub',
+            subTitle: 'Optional',
+            hint: 'github.com/your-name',
+          ),
 
           Gap(14.h),
-          MainTextField(title: 'Portfolio', subTitle: 'Optional'),
+          const MainTextField(
+            title: 'Portfolio',
+            subTitle: 'Optional',
+            hint: 'yourname.dev',
+          ),
 
           Gap(14.h),
+
+          MoreProfilesSection(
+            onChanged: (profiles) {
+              // {ProfileType.instagram: '@ziad', ...} → CardModel.instagram / facebook / tiktok / x
+            },
+            onMoreChanged: (links) {
+              // → CardModel.more
+            },
+          ),
         ],
       ),
     );

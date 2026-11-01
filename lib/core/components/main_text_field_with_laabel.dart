@@ -11,11 +11,13 @@ class MainTextField extends StatelessWidget {
     this.subTitle = '',
     this.controller,
     this.validator,
+    this.hint,
   });
   final String title;
   final String subTitle;
   final TextEditingController? controller;
   final String? Function(String?)? validator;
+  final String? hint;
 
   @override
   Widget build(BuildContext context) {
@@ -50,6 +52,20 @@ class MainTextField extends StatelessWidget {
           onTapOutside: (event) {
             FocusManager.instance.primaryFocus?.unfocus();
           },
+          cursorColor: Color.lerp(const Color(0xFFD8D2C3), Colors.black, 0.2)!,
+          cursorErrorColor: Colors.red,
+          enableInteractiveSelection: false,
+          style: GoogleFonts.dmSans(
+            fontSize: 16.sp,
+            color: AppAccent.primaryText[0],
+          ),
+          decoration: InputDecoration(
+            hintText: hint,
+            hintStyle: GoogleFonts.dmSans(
+              color: const Color(0xFF757575),
+              fontSize: 16.sp,
+            ),
+          ),
         ),
       ],
     );

@@ -28,11 +28,14 @@ class CreateCardAppBar extends StatelessWidget {
             ),
           ),
           const Spacer(),
-          TextButton(
-            onPressed: () {},
-            child: Text(
-              'Save',
-              style: GoogleFonts.dmSans(fontSize: 15.sp, fontWeight: .w600),
+          Tooltip(
+            message: 'Save',
+            child: TextButton(
+              onPressed: () {},
+              child: Text(
+                'Save',
+                style: GoogleFonts.dmSans(fontSize: 15.sp, fontWeight: .w600),
+              ),
             ),
           ),
         ],

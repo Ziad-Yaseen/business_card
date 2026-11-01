@@ -6,7 +6,11 @@ import 'package:gap/gap.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class MainCardPreview extends StatelessWidget {
-  const MainCardPreview({super.key, required this.pattern, this.lightContent = true});
+  const MainCardPreview({
+    super.key,
+    required this.pattern,
+    this.lightContent = true,
+  });
   final CardPattern pattern;
   final bool lightContent;
 
