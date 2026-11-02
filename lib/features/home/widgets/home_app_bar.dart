@@ -1,4 +1,5 @@
 import 'package:business_card/core/components/item_container.dart';
+import 'package:business_card/core/constants/app_colors.dart';
 import 'package:business_card/core/styles/app_text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -38,7 +39,13 @@ class HomeAppBar extends StatelessWidget {
                 ),
               ],
             ),
-            const ItemContainer(child: Icon(Iconsax.setting_4)),
+            ItemContainer(
+              child: IconButton(
+                tooltip: 'Settings',
+                icon: Icon(Iconsax.setting_4, color: AppAccent.primaryText[0]),
+                onPressed: null,
+              ),
+            ),
           ],
         ),
       ),
