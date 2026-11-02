@@ -6,7 +6,7 @@ import 'package:gap/gap.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class CreateCardAppBar extends StatelessWidget {
-  const CreateCardAppBar();
+  const CreateCardAppBar({super.key});
 
   @override
   Widget build(BuildContext context) {

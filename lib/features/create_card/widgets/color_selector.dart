@@ -18,10 +18,12 @@ class ColorSelectorWidget extends StatelessWidget {
             mainAxisAlignment: .spaceBetween,
             children: List.generate(
               cubit.maxNumOfColors,
-              (index) => _ColorItem(
-                isSelected: state == index,
-                color: AppAccent.presets[index].light,
-                onTap: () => cubit.slect(index),
+              (index) => Expanded(
+                child: _ColorItem(
+                  isSelected: state == index,
+                  color: AppAccent.presets[index].light,
+                  onTap: () => cubit.slect(index),
+                ),
               ),
             ),
           );
