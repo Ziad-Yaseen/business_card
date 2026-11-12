@@ -1,5 +1,5 @@
 import 'package:business_card/core/routes/route_names.dart';
-import 'package:business_card/features/create_card/creens/create_card_view.dart';
+import 'package:business_card/features/create_card/screens/create_card_view.dart';
 import 'package:business_card/features/main_layout/screens/main_layout.dart';
 import 'package:business_card/features/onboarding/screens/onboarding_view.dart';
 import 'package:business_card/features/preview/screens/preview_view.dart';

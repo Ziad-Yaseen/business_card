@@ -1,14 +1,18 @@
-import 'package:business_card/core/components/card_patterns.dart';
-import 'package:business_card/core/components/card_preview.dart';
+import 'package:business_card/core/components/main_card_preview.dart';
 import 'package:business_card/core/routes/route_names.dart';
+import 'package:business_card/data/models/card_model.dart';
+import 'package:business_card/features/main_layout/cubit/cards_cubit.dart';
 import 'package:business_card/features/onboarding/widgets/page_dots.dart';
 import 'package:material_ui/material_ui.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 
 class CardsViewWidget extends StatefulWidget {
-  const CardsViewWidget({super.key});
+  const CardsViewWidget({super.key, required this.cards});
+
+  final List<CardModel> cards;
 
   @override
   State<CardsViewWidget> createState() => _CardsViewWidgetState();
@@ -23,32 +27,46 @@ class _CardsViewWidgetState extends State<CardsViewWidget> {
     super.dispose();
   }
 
+  Future<void> _openCreate() async {
+    final cubit = context.read<CardsCubit>();
+    final saved = await context.push<bool>(RouteNames.create);
+    if (saved == true) cubit.getCards();
+  }
+
   @override
   Widget build(BuildContext context) {
-    const _data = ['fsdfsdfsd', 'fsdf', '', '', '', '', '', '', '', ''];
+    final cards = widget.cards;
+    final isSingle = cards.length == 1;
+
     return Column(
       children: [
         Gap(26.h),
-        SizedBox(
-          width: double.infinity,
-          child: CardsCarousel(
-            controller: _controller,
-            itemCount: _data.length,
-            itemBuilder: (context, i) =>
-                const CardPreview(pattern: CardPattern.rings, addSpacer: true),
-            onCardTap: (i) {},
+        if (isSingle)
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 24.w),
+            child: AspectRatio(
+              aspectRatio: 342 / 196,
+              child: MainCardPreview(card: cards.first, addSpacer: true),
+            ),
+          )
+        else ...[
+          SizedBox(
+            width: double.infinity,
+            child: CardsCarousel(
+              controller: _controller,
+              itemCount: cards.length,
+              itemBuilder: (context, i) =>
+                  MainCardPreview(card: cards[i], addSpacer: true),
+              onCardTap: (i) {},
+            ),
           ),
-        ),
-        Gap(20.h),
-        PageDots(controller: _controller, count: _data.length),
+          Gap(20.h),
+          PageDots(controller: _controller, count: cards.length),
+        ],
         Gap(26.h),
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 24.w),
-          child: _NewCardButton(
-            onTap: () {
-              context.push(RouteNames.create);
-            },
-          ),
+          child: _NewCardButton(onTap: _openCreate),
         ),
         Gap(24.h),
       ],
@@ -158,7 +176,6 @@ class CardsCarousel extends StatelessWidget {
           controller: controller,
           itemCount: itemCount,
           padEnds: false,
-          // clipBehavior: Clip.,
           itemBuilder: (context, i) => _CarouselItem(
             index: i,
             controller: controller,

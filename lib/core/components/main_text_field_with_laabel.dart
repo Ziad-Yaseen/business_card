@@ -12,12 +12,17 @@ class MainTextField extends StatelessWidget {
     this.controller,
     this.validator,
     this.hint,
+    this.onChanged,
+    this.initialValue,
   });
+
   final String title;
   final String subTitle;
   final TextEditingController? controller;
   final String? Function(String?)? validator;
   final String? hint;
+  final ValueChanged<String>? onChanged;
+  final String? initialValue;
 
   @override
   Widget build(BuildContext context) {
@@ -48,6 +53,8 @@ class MainTextField extends StatelessWidget {
         Gap(6.h),
         TextFormField(
           controller: controller,
+          initialValue: initialValue,
+          onChanged: onChanged,
           validator: validator,
           onTapOutside: (event) {
             FocusManager.instance.primaryFocus?.unfocus();
