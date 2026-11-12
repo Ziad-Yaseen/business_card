@@ -16,7 +16,8 @@ class SettingsView extends StatelessWidget {
         bottom: false,
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 24.w),
-          child: Column(children: [const SettingsAppBar(), Gap(26.h)]),
+          child: Column(children: [const SettingsAppBar(), Gap(26.h),
+          ]),
         ),
       ),
     );
