@@ -4,7 +4,7 @@ import 'package:business_card/features/main_layout/screens/main_layout.dart';
 import 'package:business_card/features/onboarding/screens/onboarding_view.dart';
 import 'package:business_card/features/preview/screens/preview_view.dart';
 import 'package:business_card/features/splash/screens/splash_screen.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:go_router/go_router.dart';
 
 class AppRouter {

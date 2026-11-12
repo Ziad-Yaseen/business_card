@@ -8,7 +8,7 @@ import 'package:business_card/features/create_card/widgets/create_card_app_bar.d
 import 'package:business_card/features/create_card/widgets/more_profiles_section.dart';
 import 'package:business_card/features/create_card/widgets/multi_field_section.dart';
 import 'package:business_card/features/create_card/widgets/pattern_selector.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';

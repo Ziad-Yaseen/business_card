@@ -1,6 +1,6 @@
 import 'package:business_card/core/components/card_patterns.dart';
 import 'package:business_card/features/create_card/cubit/pattern_cubit.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 

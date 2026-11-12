@@ -3,7 +3,7 @@ import 'package:business_card/features/home/widgets/home_app_bar.dart';
 import 'package:business_card/features/home/widgets/no_cards_widget.dart';
 import 'package:business_card/features/main_layout/cubit/cards_cubit.dart';
 import 'package:business_card/features/main_layout/cubit/states/cards_states.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomeView extends StatelessWidget {
