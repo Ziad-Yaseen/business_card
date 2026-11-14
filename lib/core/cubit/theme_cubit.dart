@@ -8,11 +8,11 @@ import 'theme_state.dart';
 class ThemeCubit extends Cubit<ThemeState> {
   ThemeCubit() : super(ThemeState(colorIndex: _readColor(), mode: _readMode()));
 
-  int numberOfColors = 6;
+  int numberOfColors = 5;
 
   static int _readColor() {
     final saved = PrefsHelper.getInt(PrefsKeys.themeColor) ?? 0;
-    return (saved < 0 || saved >= 6) ? 0 : saved;
+    return (saved < 0 || saved >= 5) ? 0 : saved;
   }
 
   static ThemeMode _readMode() {

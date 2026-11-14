@@ -1,6 +1,7 @@
 import 'package:business_card/core/constants/app_colors.dart';
 import 'package:business_card/core/cubit/theme_cubit.dart';
 import 'package:business_card/core/cubit/theme_state.dart';
+import 'package:business_card/core/helpers/theme_extension.dart';
 import 'package:business_card/features/settings/widgets/settings_color_selector.dart';
 import 'package:business_card/features/settings/widgets/settings_item.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -39,6 +40,9 @@ class ApperianceWidget extends StatelessWidget {
                       onChanged: (value) {
                         cubit.setMode(value);
                       },
+                      selectedColor: context.isDark
+                          ? AppAccent.presets[state.colorIndex].dark
+                          : AppAccent.presets[state.colorIndex].light,
                     );
                   },
                 ),
@@ -69,23 +73,28 @@ class ApperianceWidget extends StatelessWidget {
                         color: AppAccent.primaryText(context),
                       ),
                     ),
-                    TextButton(
-                      style: TextButton.styleFrom(
-                        padding: EdgeInsets.symmetric(horizontal: 16.w),
-                      ),
-                      onPressed: () {},
-                      child: Text(
-                        'Example',
-                        style: GoogleFonts.dmSans(
-                          fontSize: 13.sp,
-                          fontWeight: .w600,
+                    BlocBuilder<ThemeCubit, ThemeState>(
+                      builder: (_, state) => TextButton(
+                        style: TextButton.styleFrom(
+                          padding: EdgeInsets.symmetric(horizontal: 16.w),
+                          backgroundColor: context.isDark
+                              ? AppAccent.presets[state.colorIndex].dark
+                              : AppAccent.presets[state.colorIndex].light,
+                        ),
+                        onPressed: () {},
+                        child: Text(
+                          'Example',
+                          style: GoogleFonts.dmSans(
+                            fontSize: 13.sp,
+                            fontWeight: .w600,
+                          ),
                         ),
                       ),
                     ),
                   ],
                 ),
                 Gap(10.h),
-                SettingsColorSelectorWidget(),
+                const SettingsColorSelectorWidget(),
                 Gap(10.h),
                 Text(
                   'Used for buttons and highlights. Each card has its own color.',
@@ -106,10 +115,15 @@ class ApperianceWidget extends StatelessWidget {
 class SettingsColorSelector {}
 
 class _ThemeSelector extends StatelessWidget {
-  const _ThemeSelector({required this.selectedMode, required this.onChanged});
+  const _ThemeSelector({
+    required this.selectedMode,
+    required this.onChanged,
+    this.selectedColor = const Color(0xFF15171A),
+  });
 
   final ThemeMode selectedMode;
   final ValueChanged<ThemeMode> onChanged;
+  final Color selectedColor;
 
   @override
   Widget build(BuildContext context) {
@@ -134,6 +148,7 @@ class _ThemeSelector extends StatelessWidget {
               label: item.label,
               isSelected: selectedMode == item.mode,
               onTap: () => onChanged(item.mode),
+              selectedColor: selectedColor,
             ),
         ],
       ),
@@ -146,11 +161,13 @@ class _ThemeOption extends StatelessWidget {
     required this.label,
     required this.isSelected,
     required this.onTap,
+    this.selectedColor = const Color(0xFF15171A),
   });
 
   final String label;
   final bool isSelected;
   final VoidCallback onTap;
+  final Color selectedColor;
 
   @override
   Widget build(BuildContext context) {
@@ -164,7 +181,7 @@ class _ThemeOption extends StatelessWidget {
         padding: const .symmetric(horizontal: 13),
         alignment: .center,
         decoration: BoxDecoration(
-          color: isSelected ? const Color(0xFF15171A) : Colors.transparent,
+          color: isSelected ? selectedColor : Colors.transparent,
           borderRadius: .circular(16.r),
         ),
         child: AnimatedDefaultTextStyle(

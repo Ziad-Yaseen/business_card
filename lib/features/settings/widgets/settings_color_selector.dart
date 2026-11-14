@@ -8,8 +8,6 @@ import 'package:material_ui/material_ui.dart';
 class SettingsColorSelectorWidget extends StatelessWidget {
   const SettingsColorSelectorWidget({super.key});
 
-  static const _count = 6;
-
   @override
   Widget build(BuildContext context) {
     return BlocSelector<ThemeCubit, ThemeState, int>(
@@ -19,7 +17,7 @@ class SettingsColorSelectorWidget extends StatelessWidget {
         return Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: List.generate(
-            _count,
+            cubit.numberOfColors,
             (index) => Expanded(
               child: _ColorItem(
                 isSelected: selected == index,
