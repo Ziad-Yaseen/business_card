@@ -2,8 +2,11 @@ import 'dart:math' as math;
 import 'dart:ui';
 
 import 'package:business_card/core/constants/app_colors.dart';
+import 'package:business_card/core/cubit/theme_cubit.dart';
+import 'package:business_card/core/cubit/theme_state.dart';
 import 'package:business_card/core/helpers/theme_extension.dart';
 import 'package:business_card/core/routes/route_names.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
@@ -278,13 +281,20 @@ class _CreateCardButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextButton.icon(
-      style: TextButton.styleFrom(minimumSize: Size(double.infinity, 56.h)),
-      onPressed: () {
-        context.push(RouteNames.create);
-      },
-      label: const Text('Create a card'),
-      icon: Icon(Icons.add, size: 22.sp),
+    return BlocBuilder<ThemeCubit, ThemeState>(
+      builder: (_, state) => TextButton.icon(
+        style: TextButton.styleFrom(
+          minimumSize: Size(double.infinity, 56.h),
+          backgroundColor: context.isDark
+              ? AppAccent.presets[state.colorIndex].dark
+              : AppAccent.presets[state.colorIndex].light,
+        ),
+        onPressed: () {
+          context.push(RouteNames.create);
+        },
+        label: const Text('Create a card'),
+        icon: Icon(Icons.add, size: 22.sp),
+      ),
     );
   }
 }
