@@ -6,6 +6,7 @@ import 'package:business_card/core/cubit/theme_cubit.dart';
 import 'package:business_card/core/cubit/theme_state.dart';
 import 'package:business_card/core/helpers/theme_extension.dart';
 import 'package:business_card/core/routes/route_names.dart';
+import 'package:business_card/features/main_layout/cubit/cards_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -279,6 +280,12 @@ class _DashedRRectPainter extends CustomPainter {
 class _CreateCardButton extends StatelessWidget {
   const _CreateCardButton();
 
+  Future<void> _openCreate(BuildContext context) async {
+    final cubit = context.read<CardsCubit>();
+    final saved = await context.push<bool>(RouteNames.create);
+    if (saved == true) cubit.getCards();
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ThemeCubit, ThemeState>(
@@ -289,9 +296,7 @@ class _CreateCardButton extends StatelessWidget {
               ? AppAccent.presets[state.colorIndex].dark
               : AppAccent.presets[state.colorIndex].light,
         ),
-        onPressed: () {
-          context.push(RouteNames.create);
-        },
+        onPressed: () => _openCreate(context),
         label: const Text('Create a card'),
         icon: Icon(Icons.add, size: 22.sp),
       ),
