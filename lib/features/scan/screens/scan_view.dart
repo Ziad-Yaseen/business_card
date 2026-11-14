@@ -29,14 +29,7 @@ class _ScanViewState extends State<ScanView> {
     _controller!.dispose();
   }
 
-  void _onDetict(BarcodeCapture capture) {
-    if (_found != null) return;
-    for (final b in capture.barcodes) {
-      final raw = b.rawValue;
-      if (raw == null) continue;
-      final card;
-    }
-  }
+  void _onDetict(BarcodeCapture capture) {}
 
   Future<void> showInvalidQrDialog(BuildContext context) {
     return showDialog<void>(
