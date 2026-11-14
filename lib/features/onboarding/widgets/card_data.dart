@@ -38,7 +38,7 @@ class CardData extends StatelessWidget {
             fontSize: 34.sp,
             fontWeight: .bold,
             letterSpacing: -0.85,
-            color: AppAccent.primaryText[0],
+            color: AppAccent.primaryText(context),
           ),
         ),
         Gap(12.h),
@@ -47,7 +47,7 @@ class CardData extends StatelessWidget {
           style: GoogleFonts.dmSans(
             fontSize: 16.sp,
             fontWeight: .normal,
-            color: AppAccent.secoundaryText[0],
+            color: AppAccent.secoundaryText(context),
           ),
         ),
       ],

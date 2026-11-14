@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PrefsHelper {
@@ -29,12 +27,6 @@ class PrefsHelper {
 
   static Future<bool> setBool(String key, bool value) => _p.setBool(key, value);
 
-  static Future<bool> setStringList(String key, List<String> value) =>
-      _p.setStringList(key, value);
-
-  static Future<bool> setJson(String key, Object value) =>
-      _p.setString(key, jsonEncode(value));
-
   static String? getString(String key) => _p.getString(key);
 
   static int? getInt(String key) => _p.getInt(key);
@@ -42,18 +34,6 @@ class PrefsHelper {
   static double? getDouble(String key) => _p.getDouble(key);
 
   static bool? getBool(String key) => _p.getBool(key);
-
-  static List<String>? getStringList(String key) => _p.getStringList(key);
-
-  static dynamic getJson(String key) {
-    final raw = _p.getString(key);
-    if (raw == null) return null;
-    try {
-      return jsonDecode(raw);
-    } catch (_) {
-      return null;
-    }
-  }
 
   static bool containsKey(String key) => _p.containsKey(key);
 

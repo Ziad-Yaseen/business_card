@@ -3,24 +3,16 @@ import 'package:material_ui/material_ui.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class PageDots extends StatelessWidget {
-  const PageDots({
-    super.key,
-    required this.controller,
-    required this.count,
-    this.light = true,
-  });
+  const PageDots({super.key, required this.controller, required this.count});
 
   final PageController controller;
   final int count;
-  final bool light;
 
   @override
   Widget build(BuildContext context) {
-    final primary = light ? AppAccent.primaryText[0] : AppAccent.primaryText[1];
+    final primary = AppAccent.primaryText(context);
 
-    final secoundary = light
-        ? const Color(0xFFCFC9BA)
-        : const Color(0xFF3A3D44);
+    final secoundary = AppAccent.secondaryDot(context);
 
     return AnimatedBuilder(
       animation: controller,

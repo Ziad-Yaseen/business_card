@@ -101,7 +101,7 @@ class _View extends StatelessWidget {
                 )!,
                 style: GoogleFonts.dmSans(
                   fontSize: 16.sp,
-                  color: AppAccent.primaryText[0],
+                  color: AppAccent.primaryText(context),
                 ),
                 decoration: InputDecoration(
                   hintText: state.selected.hint,
@@ -134,7 +134,7 @@ class _ProfileChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ink = AppAccent.primaryText[0];
+    final ink = AppAccent.primaryText(context);
 
     return AnimatedContainer(
       duration: const Duration(milliseconds: 220),
@@ -159,7 +159,7 @@ class _ProfileChip extends StatelessWidget {
                   style: GoogleFonts.dmSans(
                     fontSize: 15.sp,
                     fontWeight: FontWeight.w600,
-                    color: selected ? Colors.white : ink,
+                    color: selected ? AppAccent.primaryText2(context) : ink,
                   ),
                   child: Text(label),
                 ),

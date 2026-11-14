@@ -26,7 +26,7 @@ class CreateCardAppBar extends StatelessWidget {
               fontSize: 24.sp,
               fontWeight: FontWeight.w700,
               letterSpacing: -0.6,
-              color: AppAccent.primaryText[0],
+              color: AppAccent.primaryText(context),
             ),
           ),
           const Spacer(),

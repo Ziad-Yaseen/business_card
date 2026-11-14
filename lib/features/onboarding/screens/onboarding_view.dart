@@ -45,28 +45,6 @@ class _OnboardingView extends StatefulWidget {
 
 class _OnboardingViewState extends State<_OnboardingView> {
   final PageController _controller = PageController();
-  List<Widget> screens = [
-    const CardData(
-      card: CardOne(),
-      color: Color(0xFFF9D9CD),
-      title: 'Your details, in one card.',
-      subTitle: 'Add your name, links and contact info once. Update it whenever you like.',
-    ),
-
-    const CardData(
-      card: CardTwo(),
-      color: Color(0xFFD9E2FB),
-      title: 'Share with a scan.',
-      subTitle: 'Show the QR code or send the link. They see your card in any browser, no app needed.',
-    ),
-
-    const CardData(
-      card: CardThree(),
-      color: Color(0xFFD6E9DE),
-      title: 'A card for every side of you.',
-      subTitle: 'Keep separate cards for work, freelance and personal, each with its own look.',
-    ),
-  ];
 
   @override
   void dispose() {
@@ -88,6 +66,28 @@ class _OnboardingViewState extends State<_OnboardingView> {
 
   @override
   Widget build(BuildContext context) {
+    List<Widget> screens = [
+      CardData(
+        card: const CardOne(),
+        color: AppAccent.firstCardBG(context),
+        title: 'Your details, in one card.',
+        subTitle: 'Add your name, links and contact info once. Update it whenever you like.',
+      ),
+
+      CardData(
+        card: const CardTwo(),
+        color: AppAccent.secondCardBG(context),
+        title: 'Share with a scan.',
+        subTitle: 'Show the QR code or send the link. They see your card in any browser, no app needed.',
+      ),
+
+      CardData(
+        card: const CardThree(),
+        color: AppAccent.thirdCardBG(context),
+        title: 'A card for every side of you.',
+        subTitle: 'Keep separate cards for work, freelance and personal, each with its own look.',
+      ),
+    ];
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -110,7 +110,7 @@ class _OnboardingViewState extends State<_OnboardingView> {
                       style: GoogleFonts.dmSans(
                         fontSize: 14.sp,
                         fontWeight: .w600,
-                        color: AppAccent.primaryText[0],
+                        color: AppAccent.primaryText(context),
                       ),
                     ),
                   ),
@@ -152,6 +152,7 @@ class _OnboardingViewState extends State<_OnboardingView> {
                       child: FilledButton(
                         style: TextButton.styleFrom(
                           backgroundColor: AppAccent.splashBg,
+                          foregroundColor: AppAccent.primaryText(context),
                         ),
                         onPressed: _next,
                         child: Text(isLast ? 'Get started' : 'Continue'),

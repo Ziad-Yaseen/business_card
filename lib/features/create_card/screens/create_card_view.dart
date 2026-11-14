@@ -89,7 +89,7 @@ class _TabBar extends StatelessWidget {
         width: double.infinity,
         padding: EdgeInsets.all(4.w),
         decoration: BoxDecoration(
-          color: const Color(0xFFEAE5D8),
+          color: AppAccent.darkLerpedbg(context),
           borderRadius: BorderRadius.circular(24.r),
         ),
         child: TabBar(
@@ -97,16 +97,16 @@ class _TabBar extends StatelessWidget {
           labelStyle: GoogleFonts.dmSans(
             fontSize: 14.sp,
             fontWeight: FontWeight.w600,
-            color: const Color(0xFFF4F1EA),
+            color: AppAccent.primaryText2(context),
           ),
           dividerColor: Colors.transparent,
           indicatorSize: TabBarIndicatorSize.tab,
           indicator: BoxDecoration(
-            color: AppAccent.primaryText[0],
+            color: AppAccent.primaryText(context),
             borderRadius: BorderRadius.circular(20.r),
           ),
-          labelColor: Colors.white,
-          unselectedLabelColor: const Color(0xFF5F636A),
+          labelColor: AppAccent.primaryText2(context),
+          unselectedLabelColor: AppAccent.unselectedTab(context),
           splashBorderRadius: BorderRadius.circular(20.r),
           overlayColor: WidgetStateProperty.all(Colors.transparent),
           labelPadding: EdgeInsets.symmetric(vertical: 12.h),

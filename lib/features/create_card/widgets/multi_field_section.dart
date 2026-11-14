@@ -105,7 +105,7 @@ class _View extends StatelessWidget {
                         enableInteractiveSelection: false,
                         style: GoogleFonts.dmSans(
                           fontSize: 16.sp,
-                          color: AppAccent.primaryText[0],
+                          color: AppAccent.primaryText(context),
                         ),
                         decoration: InputDecoration(
                           hintText: hint,
@@ -119,9 +119,9 @@ class _View extends StatelessWidget {
                     Gap(10.w),
                     IconButton.filledTonal(
                       style: IconButton.styleFrom(
-                        backgroundColor: const Color(0xFFEAE5D8),
+                        backgroundColor: AppAccent.darkLerpedbg(context),
                       ),
-                      color: AppAccent.primaryText[0],
+                      color: AppAccent.primaryText(context),
                       tooltip: 'Remove',
                       onPressed: () => cubit.remove(i),
                       icon: const Icon(Icons.close),
@@ -134,7 +134,7 @@ class _View extends StatelessWidget {
                 style: TextButton.styleFrom(
                   backgroundColor: Colors.transparent,
                   overlayColor: Colors.black.withValues(alpha: 0.01),
-                  foregroundColor: AppAccent.primaryText[0],
+                  foregroundColor: AppAccent.primaryText(context),
                 ),
                 onPressed: cubit.add,
                 child: Text(

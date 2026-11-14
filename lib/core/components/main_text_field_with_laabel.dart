@@ -37,14 +37,14 @@ class MainTextField extends StatelessWidget {
               style: GoogleFonts.dmSans(
                 fontSize: 13.sp,
                 fontWeight: FontWeight.w600,
-                color: AppAccent.primaryText[0],
+                color: AppAccent.primaryText(context),
               ),
             ),
             Text(
               subTitle,
               style: GoogleFonts.dmSans(
                 fontSize: 13.sp,
-                color: const Color(0xFF5F636A),
+                color: AppAccent.secoundaryText(context),
                 fontWeight: FontWeight.w500,
               ),
             ),
@@ -59,12 +59,12 @@ class MainTextField extends StatelessWidget {
           onTapOutside: (event) {
             FocusManager.instance.primaryFocus?.unfocus();
           },
-          cursorColor: Color.lerp(const Color(0xFFD8D2C3), Colors.black, 0.2)!,
+          cursorColor: AppAccent.primaryText(context),
           cursorErrorColor: Colors.red,
           enableInteractiveSelection: false,
           style: GoogleFonts.dmSans(
             fontSize: 16.sp,
-            color: AppAccent.primaryText[0],
+            color: AppAccent.primaryText(context),
           ),
           decoration: InputDecoration(
             hintText: hint,

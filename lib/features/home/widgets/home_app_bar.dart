@@ -28,7 +28,7 @@ class HomeAppBar extends StatelessWidget {
             Column(
               crossAxisAlignment: .start,
               children: [
-                Text(title, style: AppTextStyles.appbarTItle(true)),
+                Text(title, style: AppTextStyles.appbarTitle(context)),
                 // Gap(8.h),
                 Text(
                   cards,
@@ -36,7 +36,7 @@ class HomeAppBar extends StatelessWidget {
                     fontSize: 15.sp,
                     fontWeight: .normal,
                     letterSpacing: -0.38,
-                    color: const Color(0xFF5F636A),
+                    color: AppAccent.secoundaryText(context),
                   ),
                 ),
               ],
@@ -44,7 +44,10 @@ class HomeAppBar extends StatelessWidget {
             ItemContainer(
               child: IconButton(
                 tooltip: 'Settings',
-                icon: Icon(Iconsax.setting_4, color: AppAccent.primaryText[0]),
+                icon: Icon(
+                  Iconsax.setting_4,
+                  color: AppAccent.primaryText(context),
+                ),
                 onPressed: () {
                   context.pushNamed(RouteNames.settings);
                 },

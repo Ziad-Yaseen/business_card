@@ -1,3 +1,4 @@
+import 'package:business_card/features/settings/widgets/apperiance_widget.dart';
 import 'package:business_card/features/settings/widgets/settings_app_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
@@ -16,8 +17,13 @@ class SettingsView extends StatelessWidget {
         bottom: false,
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 24.w),
-          child: Column(children: [const SettingsAppBar(), Gap(26.h),
-          ]),
+          child: Column(
+            children: [
+              const SettingsAppBar(),
+              Gap(26.h),
+              ApperianceWidget()
+            ],
+          ),
         ),
       ),
     );
