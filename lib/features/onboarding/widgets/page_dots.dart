@@ -1,4 +1,8 @@
 import 'package:business_card/core/constants/app_colors.dart';
+import 'package:business_card/core/cubit/theme_cubit.dart';
+import 'package:business_card/core/cubit/theme_state.dart';
+import 'package:business_card/core/helpers/theme_extension.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -10,8 +14,6 @@ class PageDots extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final primary = AppAccent.primaryText(context);
-
     final secoundary = AppAccent.secondaryDot(context);
 
     return AnimatedBuilder(
@@ -25,13 +27,21 @@ class PageDots extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: List.generate(count, (i) {
             final t = (1 - (page - i).abs()).clamp(0.0, 1.0).toDouble();
-            return Container(
-              margin: const EdgeInsets.symmetric(horizontal: 3),
-              width: 8.w + 20.w * t,
-              height: 8.w,
-              decoration: BoxDecoration(
-                color: Color.lerp(secoundary, primary, t),
-                borderRadius: BorderRadius.circular(4.r),
+            return BlocBuilder<ThemeCubit, ThemeState>(
+              builder: (_, state) => Container(
+                margin: const EdgeInsets.symmetric(horizontal: 3),
+                width: 8.w + 20.w * t,
+                height: 8.w,
+                decoration: BoxDecoration(
+                  color: Color.lerp(
+                    secoundary,
+                    context.isDark
+                        ? AppAccent.presets[state.colorIndex].dark
+                        : AppAccent.presets[state.colorIndex].light,
+                    t,
+                  ),
+                  borderRadius: BorderRadius.circular(4.r),
+                ),
               ),
             );
           }),

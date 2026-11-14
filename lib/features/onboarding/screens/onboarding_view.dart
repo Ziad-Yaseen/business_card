@@ -1,5 +1,8 @@
 import 'package:business_card/core/constants/app_colors.dart';
+import 'package:business_card/core/cubit/theme_cubit.dart';
+import 'package:business_card/core/cubit/theme_state.dart';
 import 'package:business_card/core/helpers/prefs_helper.dart';
+import 'package:business_card/core/helpers/theme_extension.dart';
 import 'package:business_card/core/keys/prefs_keys.dart';
 import 'package:business_card/core/routes/route_names.dart';
 import 'package:business_card/features/onboarding/cubit/onboarding_cubit.dart';
@@ -137,25 +140,33 @@ class _OnboardingViewState extends State<_OnboardingView> {
                 child: BlocBuilder<OnboardingCubit, int>(
                   builder: (context, page) {
                     final isLast = page == OnboardingCubit.pageCount - 1;
-                    return Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(999),
-                        boxShadow: [
-                          BoxShadow(
-                            offset: const Offset(0, 8),
-                            blurRadius: 8,
-                            spreadRadius: 0,
-                            color: AppAccent.splashBg.withValues(alpha: 0.28),
-                          ),
-                        ],
-                      ),
-                      child: FilledButton(
-                        style: TextButton.styleFrom(
-                          backgroundColor: AppAccent.splashBg,
-                          foregroundColor: AppAccent.primaryText(context),
+                    return BlocBuilder<ThemeCubit, ThemeState>(
+                      builder: (_, state) => Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(999),
+                          boxShadow: [
+                            BoxShadow(
+                              offset: const Offset(0, 8),
+                              blurRadius: 8,
+                              spreadRadius: 0,
+                              color: context.isDark
+                                  ? AppAccent.presets[state.colorIndex].dark
+                                        .withValues(alpha: 0.28)
+                                  : AppAccent.presets[state.colorIndex].light
+                                        .withValues(alpha: 0.28),
+                            ),
+                          ],
                         ),
-                        onPressed: _next,
-                        child: Text(isLast ? 'Get started' : 'Continue'),
+                        child: FilledButton(
+                          style: TextButton.styleFrom(
+                            backgroundColor: context.isDark
+                                ? AppAccent.presets[state.colorIndex].dark
+                                : AppAccent.presets[state.colorIndex].light,
+                            foregroundColor: AppAccent.primaryText(context),
+                          ),
+                          onPressed: _next,
+                          child: Text(isLast ? 'Get started' : 'Continue'),
+                        ),
                       ),
                     );
                   },
