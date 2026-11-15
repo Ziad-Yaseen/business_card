@@ -1,5 +1,5 @@
 import 'package:business_card/core/constants/app_colors.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -38,7 +38,7 @@ class CardData extends StatelessWidget {
             fontSize: 34.sp,
             fontWeight: .bold,
             letterSpacing: -0.85,
-            color: AppAccent.primaryText[0],
+            color: AppAccent.primaryText(context),
           ),
         ),
         Gap(12.h),
@@ -47,7 +47,7 @@ class CardData extends StatelessWidget {
           style: GoogleFonts.dmSans(
             fontSize: 16.sp,
             fontWeight: .normal,
-            color: AppAccent.secoundaryText[0],
+            color: AppAccent.secoundaryText(context),
           ),
         ),
       ],

@@ -4,7 +4,7 @@ import 'package:business_card/features/main_layout/cubit/cards_cubit.dart';
 import 'package:business_card/features/main_layout/cubit/main_layout_nav_cubit.dart';
 import 'package:business_card/features/main_layout/widgets/bottom_nav_bar.dart';
 import 'package:business_card/features/scan/screens/scan_view.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax/iconsax.dart';

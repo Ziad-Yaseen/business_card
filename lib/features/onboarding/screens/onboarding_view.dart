@@ -1,5 +1,8 @@
 import 'package:business_card/core/constants/app_colors.dart';
+import 'package:business_card/core/cubit/theme_cubit.dart';
+import 'package:business_card/core/cubit/theme_state.dart';
 import 'package:business_card/core/helpers/prefs_helper.dart';
+import 'package:business_card/core/helpers/theme_extension.dart';
 import 'package:business_card/core/keys/prefs_keys.dart';
 import 'package:business_card/core/routes/route_names.dart';
 import 'package:business_card/features/onboarding/cubit/onboarding_cubit.dart';
@@ -9,7 +12,7 @@ import 'package:business_card/features/onboarding/widgets/card_three.dart';
 import 'package:business_card/features/onboarding/widgets/card_two.dart';
 import 'package:business_card/features/onboarding/widgets/my_app_icon_widget.dart';
 import 'package:business_card/features/onboarding/widgets/page_dots.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
@@ -45,28 +48,6 @@ class _OnboardingView extends StatefulWidget {
 
 class _OnboardingViewState extends State<_OnboardingView> {
   final PageController _controller = PageController();
-  List<Widget> screens = [
-    const CardData(
-      card: CardOne(),
-      color: Color(0xFFF9D9CD),
-      title: 'Your details, in one card.',
-      subTitle: 'Add your name, links and contact info once. Update it whenever you like.',
-    ),
-
-    const CardData(
-      card: CardTwo(),
-      color: Color(0xFFD9E2FB),
-      title: 'Share with a scan.',
-      subTitle: 'Show the QR code or send the link. They see your card in any browser, no app needed.',
-    ),
-
-    const CardData(
-      card: CardThree(),
-      color: Color(0xFFD6E9DE),
-      title: 'A card for every side of you.',
-      subTitle: 'Keep separate cards for work, freelance and personal, each with its own look.',
-    ),
-  ];
 
   @override
   void dispose() {
@@ -88,6 +69,28 @@ class _OnboardingViewState extends State<_OnboardingView> {
 
   @override
   Widget build(BuildContext context) {
+    List<Widget> screens = [
+      CardData(
+        card: const CardOne(),
+        color: AppAccent.firstCardBG(context),
+        title: 'Your details, in one card.',
+        subTitle: 'Add your name, links and contact info once. Update it whenever you like.',
+      ),
+
+      CardData(
+        card: const CardTwo(),
+        color: AppAccent.secondCardBG(context),
+        title: 'Share with a scan.',
+        subTitle: 'Show the QR code or send the link. They see your card in any browser, no app needed.',
+      ),
+
+      CardData(
+        card: const CardThree(),
+        color: AppAccent.thirdCardBG(context),
+        title: 'A card for every side of you.',
+        subTitle: 'Keep separate cards for work, freelance and personal, each with its own look.',
+      ),
+    ];
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -110,7 +113,7 @@ class _OnboardingViewState extends State<_OnboardingView> {
                       style: GoogleFonts.dmSans(
                         fontSize: 14.sp,
                         fontWeight: .w600,
-                        color: AppAccent.primaryText[0],
+                        color: AppAccent.primaryText(context),
                       ),
                     ),
                   ),
@@ -137,24 +140,33 @@ class _OnboardingViewState extends State<_OnboardingView> {
                 child: BlocBuilder<OnboardingCubit, int>(
                   builder: (context, page) {
                     final isLast = page == OnboardingCubit.pageCount - 1;
-                    return Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(999),
-                        boxShadow: [
-                          BoxShadow(
-                            offset: const Offset(0, 8),
-                            blurRadius: 8,
-                            spreadRadius: 0,
-                            color: AppAccent.splashBg.withValues(alpha: 0.28),
-                          ),
-                        ],
-                      ),
-                      child: FilledButton(
-                        style: TextButton.styleFrom(
-                          backgroundColor: AppAccent.splashBg,
+                    return BlocBuilder<ThemeCubit, ThemeState>(
+                      builder: (_, state) => Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(999),
+                          boxShadow: [
+                            BoxShadow(
+                              offset: const Offset(0, 8),
+                              blurRadius: 8,
+                              spreadRadius: 0,
+                              color: context.isDark
+                                  ? AppAccent.presets[state.colorIndex].dark
+                                        .withValues(alpha: 0.28)
+                                  : AppAccent.presets[state.colorIndex].light
+                                        .withValues(alpha: 0.28),
+                            ),
+                          ],
                         ),
-                        onPressed: _next,
-                        child: Text(isLast ? 'Get started' : 'Continue'),
+                        child: FilledButton(
+                          style: TextButton.styleFrom(
+                            backgroundColor: context.isDark
+                                ? AppAccent.presets[state.colorIndex].dark
+                                : AppAccent.presets[state.colorIndex].light,
+                            foregroundColor: Colors.white,
+                          ),
+                          onPressed: _next,
+                          child: Text(isLast ? 'Get started' : 'Continue'),
+                        ),
                       ),
                     );
                   },
