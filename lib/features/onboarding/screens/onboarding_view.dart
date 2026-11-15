@@ -162,7 +162,7 @@ class _OnboardingViewState extends State<_OnboardingView> {
                             backgroundColor: context.isDark
                                 ? AppAccent.presets[state.colorIndex].dark
                                 : AppAccent.presets[state.colorIndex].light,
-                            foregroundColor: AppAccent.primaryText2(context),
+                            foregroundColor: Colors.white,
                           ),
                           onPressed: _next,
                           child: Text(isLast ? 'Get started' : 'Continue'),
