@@ -46,7 +46,11 @@ class OnboardingCard extends StatelessWidget {
             Gap(6.5.w),
             Text(
               text,
-              style: GoogleFonts.dmSans(fontSize: 13.sp, fontWeight: .w700),
+              style: GoogleFonts.dmSans(
+                fontSize: 13.sp,
+                fontWeight: .w700,
+                color: const Color(0xFF15171A),
+              ),
             ),
           ],
         ),

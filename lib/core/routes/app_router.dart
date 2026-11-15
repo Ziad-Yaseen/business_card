@@ -1,4 +1,5 @@
 import 'package:business_card/core/routes/route_names.dart';
+import 'package:business_card/data/models/card_model.dart';
 import 'package:business_card/features/create_card/screens/create_card_view.dart';
 import 'package:business_card/features/main_layout/screens/main_layout.dart';
 import 'package:business_card/features/onboarding/screens/onboarding_view.dart';
@@ -58,17 +59,6 @@ class AppRouter {
       ),
 
       GoRoute(
-        path: RouteNames.preview,
-        name: RouteNames.preview,
-        pageBuilder: (context, state) => CustomTransitionPage(
-          key: state.pageKey,
-          child: const PreviewView(),
-          transitionsBuilder: (context, animation, secondaryAnimation, child) =>
-              FadeTransition(opacity: animation, child: child),
-        ),
-      ),
-
-      GoRoute(
         path: RouteNames.settings,
         name: RouteNames.settings,
         pageBuilder: (context, state) => CustomTransitionPage(
@@ -77,6 +67,25 @@ class AppRouter {
           transitionsBuilder: (context, animation, secondaryAnimation, child) =>
               FadeTransition(opacity: animation, child: child),
         ),
+      ),
+
+      GoRoute(
+        path: RouteNames.preview,
+        name: RouteNames.preview,
+        pageBuilder: (context, state) {
+          final card = state.extra as CardModel;
+
+          return CustomTransitionPage(
+            key: state.pageKey,
+            child: PreviewView(card: card),
+            transitionsBuilder: (
+              context,
+              animation,
+              secondaryAnimation,
+              child,
+            ) => FadeTransition(opacity: animation, child: child),
+          );
+        },
       ),
     ],
   );

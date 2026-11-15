@@ -17,7 +17,7 @@ class MyAppIconWidget extends StatelessWidget {
               fontSize: 24.sp,
               fontWeight: .w800,
               letterSpacing: -0.72,
-              color: AppAccent.primaryText[0],
+              color: AppAccent.primaryText(context),
             ),
           ),
           TextSpan(

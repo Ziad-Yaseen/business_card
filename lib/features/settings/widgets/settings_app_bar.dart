@@ -14,7 +14,7 @@ class SettingsAppBar extends StatelessWidget {
       children: [
         const MainBackButton(),
         Gap(14.w),
-        Text('Settings', style: AppTextStyles.appbarTItle(true)),
+        Text('Settings', style: AppTextStyles.appbarTitle(context)),
       ],
     );
   }

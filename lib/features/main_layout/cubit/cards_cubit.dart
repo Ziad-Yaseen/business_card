@@ -1,7 +1,7 @@
 import 'package:business_card/core/helpers/card_dao.dart';
 import 'package:business_card/core/helpers/database_helper.dart';
 import 'package:business_card/core/repositories/card_repositories.dart';
-import 'package:business_card/features/main_layout/screens/states/cards_states.dart';
+import 'package:business_card/features/main_layout/cubit/states/cards_states.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CardsCubit extends Cubit<CardsStates> {
