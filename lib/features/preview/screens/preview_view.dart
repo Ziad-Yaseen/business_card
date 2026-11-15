@@ -1,4 +1,3 @@
-import 'package:business_card/core/components/card_preview.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:gap/gap.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -21,9 +20,7 @@ class _PreviewAppBar extends StatelessWidget {
     return Row(
       children: [
         Gap(12.w),
-        CardPreview(
-
-        ),
+        
       ],
     );
   }

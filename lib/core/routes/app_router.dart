@@ -78,6 +78,17 @@ class AppRouter {
               FadeTransition(opacity: animation, child: child),
         ),
       ),
+
+      GoRoute(
+        path: RouteNames.preview,
+        name: RouteNames.preview,
+        pageBuilder: (context, state) => CustomTransitionPage(
+          key: state.pageKey,
+          child: const PreviewView(),
+          transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+              FadeTransition(opacity: animation, child: child),
+        ),
+      ),
     ],
   );
 }
