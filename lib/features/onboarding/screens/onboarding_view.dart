@@ -9,7 +9,7 @@ import 'package:business_card/features/onboarding/widgets/card_three.dart';
 import 'package:business_card/features/onboarding/widgets/card_two.dart';
 import 'package:business_card/features/onboarding/widgets/my_app_icon_widget.dart';
 import 'package:business_card/features/onboarding/widgets/page_dots.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';

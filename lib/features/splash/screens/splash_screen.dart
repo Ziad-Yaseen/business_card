@@ -4,7 +4,7 @@ import 'package:business_card/core/routes/route_names.dart';
 import 'package:business_card/features/splash/widgets/app_icon.dart';
 import 'package:business_card/features/splash/widgets/splash_bg.dart';
 import 'package:business_card/features/splash/widgets/splash_cards_widget.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';

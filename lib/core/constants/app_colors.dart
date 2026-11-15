@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class AppAccent extends Equatable {
   const AppAccent(this.name, this.light, this.dark);

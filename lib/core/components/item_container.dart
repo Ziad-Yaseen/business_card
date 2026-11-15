@@ -1,5 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:material_ui/material_ui.dart';
 
 class ItemContainer extends StatelessWidget {
   const ItemContainer({super.key, required this.child});
@@ -8,7 +7,6 @@ class ItemContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(11.w),
       decoration: BoxDecoration(
         shape: .circle,
         color: Colors.white,
