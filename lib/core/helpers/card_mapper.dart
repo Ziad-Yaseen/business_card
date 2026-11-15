@@ -16,5 +16,6 @@ CardModel cardFromRow(Map<String, Object?> row) {
     jsonDecode(row[DBHelper.colData] as String) as Map<String, dynamic>,
     id: row[DBHelper.colId] as String,
     mine: (row[DBHelper.colMine] as int) == 1,
+    createdAt: row[DBHelper.colCreatedAt] as int?,
   );
 }

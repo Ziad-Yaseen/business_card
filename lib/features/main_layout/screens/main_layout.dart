@@ -1,3 +1,4 @@
+import 'package:business_card/features/contacts/cubit/contacts_cubit.dart';
 import 'package:business_card/features/contacts/screens/contacts_view.dart';
 import 'package:business_card/features/home/screens/home_view.dart';
 import 'package:business_card/features/main_layout/cubit/cards_cubit.dart';
@@ -18,6 +19,7 @@ class MainLayout extends StatelessWidget {
       providers: [
         BlocProvider(create: (_) => MainLayoutNavCubit()),
         BlocProvider(create: (_) => CardsCubit()),
+        BlocProvider(create: (_) => ContactsCubit()),
       ],
       child: const _MainLayoutScaffold(),
     );
@@ -42,7 +44,11 @@ class _MainLayoutScaffoldState extends State<_MainLayoutScaffold> {
     AppBottomNavItem(icon: Iconsax.profile_2user, label: 'Contacts'),
   ];
 
-  static const _pages = <Widget>[HomeView(), ScanView(), ContactsView()];
+  static const _pages = <Widget>[
+    _KeepAlive(child: HomeView()),
+    _KeepAlive(child: ScanView()),
+    _KeepAlive(child: ContactsView()),
+  ];
 
   final PageController _controller = PageController();
 
@@ -61,15 +67,6 @@ class _MainLayoutScaffoldState extends State<_MainLayoutScaffold> {
 
     HapticFeedback.selectionClick();
     cubit.select(index);
-
-    final token = ++_navToken;
-    _animating = true;
-    await _controller.animateToPage(
-      index,
-      duration: const Duration(milliseconds: 350),
-      curve: Curves.easeOutCubic,
-    );
-    if (mounted && token == _navToken) _animating = false;
   }
 
   void _onPageChanged(int index) {
@@ -79,7 +76,22 @@ class _MainLayoutScaffoldState extends State<_MainLayoutScaffold> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<MainLayoutNavCubit, int>(
+    return BlocConsumer<MainLayoutNavCubit, int>(
+      listener: (context, index) async {
+        if (_controller.hasClients && _controller.page?.round() != index) {
+          final token = ++_navToken;
+          _animating = true;
+          await _controller.animateToPage(
+            index,
+            duration: const Duration(milliseconds: 350),
+            curve: Curves.easeOutCubic,
+          );
+          if (mounted && token == _navToken) _animating = false;
+        }
+        if (index == 2 && context.mounted) {
+          context.read<ContactsCubit>().loadContacts();
+        }
+      },
       builder: (context, index) {
         return PopScope(
           canPop: index == 0,

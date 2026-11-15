@@ -22,6 +22,7 @@ class CardModel {
     this.tiktok,
     this.more,
     this.mine = true,
+    this.createdAt,
   });
 
   final String id;
@@ -47,6 +48,7 @@ class CardModel {
   final String? nickName;
 
   final bool mine;
+  final int? createdAt;
 
   String get displayName =>
       [firstName, lastName].where((s) => s.trim().isNotEmpty).join(' ');
@@ -84,12 +86,18 @@ class CardModel {
             (v is List && v.isEmpty),
       );
 
-  Map<String, dynamic> toJson() => {...toShareJson(), 'id': id, 'my': mine};
+  Map<String, dynamic> toJson() => {
+    ...toShareJson(),
+    'id': id,
+    'my': mine,
+    if (createdAt != null) 'ct': createdAt,
+  };
 
   factory CardModel.fromJson(
     Map<String, dynamic> json, {
     String? id,
     bool? mine,
+    int? createdAt,
   }) {
     List<String> strings(Object? v) =>
         v == null ? const [] : List<String>.from(v as List);
@@ -116,6 +124,7 @@ class CardModel {
       tiktok: json['t'] as String?,
       more: json['m'] == null ? null : strings(json['m']),
       mine: mine ?? (json['my'] as bool? ?? true),
+      createdAt: createdAt ?? json['ct'] as int?,
     );
   }
 
@@ -138,6 +147,7 @@ class CardModel {
     String? x,
     String? tiktok,
     List<String>? more,
+    int? createdAt,
   }) {
     return CardModel(
       id: id,
@@ -160,6 +170,7 @@ class CardModel {
       tiktok: tiktok ?? this.tiktok,
       more: more ?? this.more,
       mine: mine,
+      createdAt: createdAt ?? this.createdAt,
     );
   }
 }

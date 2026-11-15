@@ -2,6 +2,9 @@ import 'dart:math' as math;
 import 'dart:ui';
 
 import 'package:business_card/core/routes/route_names.dart';
+import 'package:business_card/features/contacts/cubit/contacts_cubit.dart';
+import 'package:business_card/features/main_layout/cubit/cards_cubit.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
@@ -290,8 +293,12 @@ class _CreateCardButton extends StatelessWidget {
       ),
       child: TextButton.icon(
         style: TextButton.styleFrom(minimumSize: Size(double.infinity, 56.h)),
-        onPressed: () {
-          context.push(RouteNames.create);
+        onPressed: () async {
+          final saved = await context.push<bool>(RouteNames.create);
+          if (saved == true && context.mounted) {
+            context.read<CardsCubit>().getCards();
+            context.read<ContactsCubit>().loadContacts();
+          }
         },
         label: const Text('Create a card'),
         icon: Icon(Icons.add, size: 22.sp),
