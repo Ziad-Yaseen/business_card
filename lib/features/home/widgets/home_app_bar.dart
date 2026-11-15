@@ -1,9 +1,7 @@
 import 'package:business_card/core/components/item_container.dart';
 import 'package:business_card/core/constants/app_colors.dart';
-import 'package:business_card/core/routes/route_names.dart';
 import 'package:business_card/core/styles/app_text_styles.dart';
-import 'package:go_router/go_router.dart';
-import 'package:material_ui/material_ui.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
@@ -28,7 +26,7 @@ class HomeAppBar extends StatelessWidget {
             Column(
               crossAxisAlignment: .start,
               children: [
-                Text(title, style: AppTextStyles.appbarTitle(context)),
+                Text(title, style: AppTextStyles.appbarTItle(true)),
                 // Gap(8.h),
                 Text(
                   cards,
@@ -36,7 +34,7 @@ class HomeAppBar extends StatelessWidget {
                     fontSize: 15.sp,
                     fontWeight: .normal,
                     letterSpacing: -0.38,
-                    color: AppAccent.secoundaryText(context),
+                    color: const Color(0xFF5F636A),
                   ),
                 ),
               ],
@@ -44,13 +42,8 @@ class HomeAppBar extends StatelessWidget {
             ItemContainer(
               child: IconButton(
                 tooltip: 'Settings',
-                icon: Icon(
-                  Iconsax.setting_4,
-                  color: AppAccent.primaryText(context),
-                ),
-                onPressed: () {
-                  context.pushNamed(RouteNames.settings);
-                },
+                icon: Icon(Iconsax.setting_4, color: AppAccent.primaryText[0]),
+                onPressed: null,
               ),
             ),
           ],

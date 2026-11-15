@@ -1,5 +1,5 @@
 import 'package:business_card/core/constants/app_colors.dart';
-import 'package:material_ui/material_ui.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -12,11 +12,7 @@ class AppText {
     required Color c,
   }) {
     if (ar) {
-      return GoogleFonts.ibmPlexSansArabic(
-        fontSize: size,
-        fontWeight: weight,
-        color: c,
-      );
+      return GoogleFonts.ibmPlexSansArabic(fontSize: size, fontWeight: weight);
     }
     return GoogleFonts.bricolageGrotesque(
       fontSize: size,
@@ -38,19 +34,18 @@ class AppTextStyles {
     );
   }
 
-  static TextStyle appbarTitle(BuildContext context, {bool arabic = false}) {
+  static TextStyle appbarTItle(bool light, {bool arabic = false}) {
     final ar = arabic;
     return ar
         ? AppText._display(
             ar,
             38.sp,
-            c: AppAccent.primaryText(context),
+            c: light ? AppAccent.primaryText[0] : AppAccent.primaryText[1],
             weight: .w700,
           )
         : GoogleFonts.bricolageGrotesque(
             fontSize: 38.sp,
-            color:
-                AppAccent.primaryText(context),
+            color: light ? AppAccent.primaryText[0] : AppAccent.primaryText[1],
             fontWeight: .w700,
           );
   }

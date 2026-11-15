@@ -1,6 +1,6 @@
 import 'dart:math' as math;
 
-import 'package:material_ui/material_ui.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -46,11 +46,7 @@ class OnboardingCard extends StatelessWidget {
             Gap(6.5.w),
             Text(
               text,
-              style: GoogleFonts.dmSans(
-                fontSize: 13.sp,
-                fontWeight: .w700,
-                color: const Color(0xFF15171A),
-              ),
+              style: GoogleFonts.dmSans(fontSize: 13.sp, fontWeight: .w700),
             ),
           ],
         ),

@@ -1,5 +1,5 @@
 import 'package:business_card/core/constants/app_colors.dart';
-import 'package:material_ui/material_ui.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -76,7 +76,7 @@ class CardPreview extends StatelessWidget {
                       style: GoogleFonts.dmSans(
                         fontSize: 14.sp,
                         fontWeight: .w500,
-                        color: AppAccent.primaryText(context).withValues(
+                        color: AppAccent.primaryText[0].withValues(
                           alpha: lightContent ? 85 : 90,
                         ),
                       ),
@@ -92,7 +92,7 @@ class CardPreview extends StatelessWidget {
                         Text(
                           'ziadyaseen.dev@gmail.com',
                           style: GoogleFonts.dmSans(
-                            color: AppAccent.primaryText(context),
+                            color: AppAccent.primaryText[0],
                             fontSize: 13.sp,
                           ),
                         ),
@@ -125,7 +125,7 @@ class _CompanyContainer extends StatelessWidget {
       child: Text(
         company,
         style: GoogleFonts.dmSans(
-          color: AppAccent.primaryText(context),
+          color: AppAccent.primaryText[0],
           fontSize: 11.sp,
           letterSpacing: 0.88,
           fontWeight: .w600,

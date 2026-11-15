@@ -1,5 +1,4 @@
-import 'package:business_card/core/constants/app_colors.dart';
-import 'package:material_ui/material_ui.dart';
+import 'package:flutter/material.dart';
 
 class ItemContainer extends StatelessWidget {
   const ItemContainer({super.key, required this.child});
@@ -10,8 +9,8 @@ class ItemContainer extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         shape: .circle,
-        color: AppAccent.cardBg(context),
-        border: Border.all(color: AppAccent.border(context), width: 1),
+        color: Colors.white,
+        border: Border.all(color: const Color(0xFFDDD7C8)),
         boxShadow: [
           BoxShadow(
             offset: const Offset(0, 1),
