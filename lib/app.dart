@@ -1,5 +1,8 @@
+import 'package:business_card/core/cubit/theme_cubit.dart';
+import 'package:business_card/core/cubit/theme_state.dart';
 import 'package:business_card/core/routes/app_router.dart';
 import 'package:business_card/core/styles/app_themes.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -8,14 +11,23 @@ class BusinessCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ScreenUtilInit(
-      designSize: const Size(390, 844),
-      minTextAdapt: true,
-      splitScreenMode: true,
-      builder: (context, child) => MaterialApp.router(
-        theme: AppThemes.light,
-        routerConfig: AppRouter.router,
-        debugShowCheckedModeBanner: false,
+    return BlocProvider(
+      create: (_) => ThemeCubit(),
+      child: ScreenUtilInit(
+        designSize: const Size(390, 844),
+        minTextAdapt: true,
+        splitScreenMode: true,
+        builder: (context, child) => BlocBuilder<ThemeCubit, ThemeState>(
+          builder: (context, state) {
+            return MaterialApp.router(
+              theme: AppThemes.light,
+              darkTheme: AppThemes.dark,
+              themeMode: state.mode,
+              routerConfig: AppRouter.router,
+              debugShowCheckedModeBanner: false,
+            );
+          },
+        ),
       ),
     );
   }

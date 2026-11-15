@@ -1,6 +1,9 @@
 import 'package:business_card/core/components/main_card_preview.dart';
 import 'package:business_card/core/components/main_text_field_with_laabel.dart';
 import 'package:business_card/core/constants/app_colors.dart';
+import 'package:business_card/core/cubit/theme_cubit.dart';
+import 'package:business_card/core/cubit/theme_state.dart';
+import 'package:business_card/core/helpers/theme_extension.dart';
 import 'package:business_card/features/create_card/cubit/create_card_cubit.dart';
 import 'package:business_card/features/create_card/cubit/create_card_state.dart';
 import 'package:business_card/features/create_card/cubit/tab_cubit.dart';
@@ -89,28 +92,32 @@ class _TabBar extends StatelessWidget {
         width: double.infinity,
         padding: EdgeInsets.all(4.w),
         decoration: BoxDecoration(
-          color: const Color(0xFFEAE5D8),
+          color: AppAccent.darkLerpedbg(context),
           borderRadius: BorderRadius.circular(24.r),
         ),
-        child: TabBar(
-          onTap: (index) => context.read<TabCubit>().select(index),
-          labelStyle: GoogleFonts.dmSans(
-            fontSize: 14.sp,
-            fontWeight: FontWeight.w600,
-            color: const Color(0xFFF4F1EA),
+        child: BlocBuilder<ThemeCubit, ThemeState>(
+          builder: (_, state) => TabBar(
+            onTap: (index) => context.read<TabCubit>().select(index),
+            labelStyle: GoogleFonts.dmSans(
+              fontSize: 14.sp,
+              fontWeight: FontWeight.w600,
+              color: AppAccent.primaryText2(context),
+            ),
+            dividerColor: Colors.transparent,
+            indicatorSize: TabBarIndicatorSize.tab,
+            indicator: BoxDecoration(
+              color: context.isDark
+                  ? AppAccent.presets[state.colorIndex].dark
+                  : AppAccent.presets[state.colorIndex].light,
+              borderRadius: BorderRadius.circular(20.r),
+            ),
+            labelColor: AppAccent.primaryText2(context),
+            unselectedLabelColor: AppAccent.unselectedTab(context),
+            splashBorderRadius: BorderRadius.circular(20.r),
+            overlayColor: WidgetStateProperty.all(Colors.transparent),
+            labelPadding: EdgeInsets.symmetric(vertical: 12.h),
+            tabs: const [Text('Look'), Text('Details'), Text('Links')],
           ),
-          dividerColor: Colors.transparent,
-          indicatorSize: TabBarIndicatorSize.tab,
-          indicator: BoxDecoration(
-            color: AppAccent.primaryText[0],
-            borderRadius: BorderRadius.circular(20.r),
-          ),
-          labelColor: Colors.white,
-          unselectedLabelColor: const Color(0xFF5F636A),
-          splashBorderRadius: BorderRadius.circular(20.r),
-          overlayColor: WidgetStateProperty.all(Colors.transparent),
-          labelPadding: EdgeInsets.symmetric(vertical: 12.h),
-          tabs: const [Text('Look'), Text('Details'), Text('Links')],
         ),
       ),
     );

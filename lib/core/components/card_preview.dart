@@ -76,7 +76,7 @@ class CardPreview extends StatelessWidget {
                       style: GoogleFonts.dmSans(
                         fontSize: 14.sp,
                         fontWeight: .w500,
-                        color: AppAccent.primaryText[0].withValues(
+                        color: AppAccent.primaryText(context).withValues(
                           alpha: lightContent ? 85 : 90,
                         ),
                       ),
@@ -92,7 +92,7 @@ class CardPreview extends StatelessWidget {
                         Text(
                           'ziadyaseen.dev@gmail.com',
                           style: GoogleFonts.dmSans(
-                            color: AppAccent.primaryText[0],
+                            color: AppAccent.primaryText(context),
                             fontSize: 13.sp,
                           ),
                         ),
@@ -125,7 +125,7 @@ class _CompanyContainer extends StatelessWidget {
       child: Text(
         company,
         style: GoogleFonts.dmSans(
-          color: AppAccent.primaryText[0],
+          color: AppAccent.primaryText(context),
           fontSize: 11.sp,
           letterSpacing: 0.88,
           fontWeight: .w600,
