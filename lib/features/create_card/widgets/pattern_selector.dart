@@ -1,44 +1,38 @@
 import 'package:business_card/core/components/card_patterns.dart';
-import 'package:business_card/core/constants/app_colors.dart';
-import 'package:business_card/features/create_card/cubit/create_card_cubit.dart';
-import 'package:business_card/features/create_card/cubit/create_card_state.dart';
-import 'package:material_ui/material_ui.dart';
+import 'package:business_card/features/create_card/cubit/pattern_cubit.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class PatternSelector extends StatelessWidget {
   const PatternSelector({super.key});
 
-  static const _patterns = [
-    CardPattern.rings,
-    CardPattern.stripes,
-    CardPattern.none,
-  ];
-
   @override
   Widget build(BuildContext context) {
-    return BlocSelector<CreateCardCubit, CreateCardState, (CardPattern, int)>(
-      selector: (state) => (state.pattern, state.colorIndex),
-      builder: (context, value) {
-        final (selected, colorIndex) = value;
-        final cubit = context.read<CreateCardCubit>();
-        final base = AppAccent.presets[colorIndex].light;
-
-        return Row(
-          spacing: 12.w,
-          children: [
-            for (final pattern in _patterns)
-              Expanded(
+    return BlocProvider(
+      create: (context) => PatternCubit(),
+      child: BlocBuilder<PatternCubit, int>(
+        builder: (context, state) {
+          final cubit = context.read<PatternCubit>();
+          return Row(
+            spacing: 12.w,
+            children: List.generate(cubit.maxNumberOfPatterns, (index) {
+              final pattern = index == 0
+                  ? CardPattern.rings
+                  : index == 1
+                  ? CardPattern.stripes
+                  : CardPattern.none;
+              return Expanded(
                 child: _PatternItem(
                   pattern: pattern,
-                  color: base,
-                  isActive: selected == pattern,
-                  onTap: () => cubit.patternChanged(pattern),
+                  isActive: state == index,
+                  onTap: () => cubit.select(index),
                 ),
-              ),
-          ],
-        );
-      },
+              );
+            }),
+          );
+        },
+      ),
     );
   }
 }
@@ -46,13 +40,11 @@ class PatternSelector extends StatelessWidget {
 class _PatternItem extends StatelessWidget {
   const _PatternItem({
     required this.pattern,
-    required this.color,
-    required this.isActive,
+    this.isActive = false,
     required this.onTap,
   });
 
   final CardPattern pattern;
-  final Color color;
   final bool isActive;
   final VoidCallback onTap;
 
@@ -68,10 +60,10 @@ class _PatternItem extends StatelessWidget {
         child: Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(16.r),
-            gradient: LinearGradient(
+            gradient: const LinearGradient(
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
-              colors: [color, Color.lerp(color, Colors.black, 0.35)!],
+              colors: [Color(0xFF2A55E0), Color(0xFF1636A0)],
             ),
             border: Border.all(
               color: Color(isActive ? 0xFF15171A : 0xFFD8D2C3),

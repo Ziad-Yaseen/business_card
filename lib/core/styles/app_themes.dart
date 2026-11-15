@@ -1,12 +1,11 @@
 import 'package:business_card/core/constants/app_colors.dart';
 import 'package:business_card/core/styles/app_text_styles.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:material_ui/material_ui.dart';
 
 class AppThemes {
-  static ThemeData get light => ThemeData(
-    brightness: Brightness.light,
+  static ThemeData light = ThemeData(
     primaryColor: AppAccent.presets[0].light,
     useMaterial3: true,
     scaffoldBackgroundColor: AppAccent.bg[0],
@@ -15,6 +14,7 @@ class AppThemes {
       elevation: 0,
       scrolledUnderElevation: 0,
       centerTitle: false,
+      titleTextStyle: AppTextStyles.appbarTItle(true),
     ),
 
     filledButtonTheme: FilledButtonThemeData(
@@ -22,8 +22,7 @@ class AppThemes {
         minimumSize: Size.fromHeight(56.h),
         shape: const StadiumBorder(),
         elevation: 0,
-        textStyle: AppTextStyles.fillefButtonText(true)
-            .copyWith(inherit: false),
+        textStyle: AppTextStyles.fillefButtonText(true),
       ),
     ),
 
@@ -31,8 +30,7 @@ class AppThemes {
       style: OutlinedButton.styleFrom(
         minimumSize: Size.fromHeight(52.h),
         shape: const StadiumBorder(),
-        textStyle: AppTextStyles.fillefButtonText(true)
-            .copyWith(inherit: false),
+        textStyle: AppTextStyles.fillefButtonText(true),
       ),
     ),
 
@@ -45,10 +43,7 @@ class AppThemes {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadiusGeometry.circular(9999),
         ),
-        textStyle: GoogleFonts.dmSans(
-          fontSize: 16.sp,
-          fontWeight: FontWeight.w700,
-        ).copyWith(inherit: false),
+        textStyle: GoogleFonts.dmSans(fontSize: 16.sp, fontWeight: .w700),
       ),
     ),
 
@@ -65,6 +60,7 @@ class AppThemes {
       floatingLabelBehavior: FloatingLabelBehavior.never,
       contentPadding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 12.5.w),
       fillColor: Colors.white,
+
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(14.r),
         borderSide: const BorderSide(color: Color(0xFFD8D2C3)),
@@ -104,9 +100,7 @@ class AppThemes {
     ),
   );
 
-  static ThemeData get dark => ThemeData(
-    brightness: Brightness.dark,
-    primaryColor: AppAccent.presets[0].dark,
+  static ThemeData dark = ThemeData(
     useMaterial3: true,
     scaffoldBackgroundColor: AppAccent.bg[1],
     appBarTheme: AppBarTheme(
@@ -114,6 +108,7 @@ class AppThemes {
       elevation: 0,
       scrolledUnderElevation: 0,
       centerTitle: false,
+      titleTextStyle: AppTextStyles.appbarTItle(false),
     ),
 
     filledButtonTheme: FilledButtonThemeData(
@@ -121,8 +116,7 @@ class AppThemes {
         minimumSize: Size.fromHeight(56.h),
         shape: const StadiumBorder(),
         elevation: 0,
-        textStyle: AppTextStyles.fillefButtonText(false)
-            .copyWith(inherit: false),
+        textStyle: AppTextStyles.fillefButtonText(false),
       ),
     ),
 
@@ -130,24 +124,13 @@ class AppThemes {
       style: OutlinedButton.styleFrom(
         minimumSize: Size.fromHeight(52.h),
         shape: const StadiumBorder(),
-        textStyle: AppTextStyles.fillefButtonText(false)
-            .copyWith(inherit: false),
+        textStyle: AppTextStyles.fillefButtonText(false),
       ),
     ),
 
     textButtonTheme: TextButtonThemeData(
       style: TextButton.styleFrom(
-        iconColor: const Color(0xffFFFFFF),
-        backgroundColor: AppAccent.splashBg,
-        overlayColor: AppAccent.splashBg.withValues(alpha: 0.4),
-        foregroundColor: const Color(0xFFFFFFFF),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadiusGeometry.circular(9999),
-        ),
-        textStyle: GoogleFonts.dmSans(
-          fontSize: 16.sp,
-          fontWeight: FontWeight.w700,
-        ).copyWith(inherit: false),
+        textStyle: AppTextStyles.fillefButtonText(false),
       ),
     ),
 
@@ -162,22 +145,7 @@ class AppThemes {
       filled: true,
       isDense: false,
       floatingLabelBehavior: FloatingLabelBehavior.never,
-      contentPadding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 12.5.w),
-      fillColor: const Color(0xFF181A1E),
-      border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(14.r),
-        borderSide: const BorderSide(color: Color(0xFF33363D)),
-      ),
-      enabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(14.r),
-        borderSide: const BorderSide(color: Color(0xFF33363D)),
-      ),
-      focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(14.r),
-        borderSide: BorderSide(
-          color: Color.lerp(const Color(0xFF33363D), Colors.black, 0.2)!,
-        ),
-      ),
+      contentPadding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 14.w),
     ),
 
     chipTheme: ChipThemeData(

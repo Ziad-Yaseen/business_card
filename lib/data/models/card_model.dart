@@ -1,6 +1,3 @@
-import 'dart:convert';
-import 'dart:io';
-
 import 'package:business_card/core/components/card_patterns.dart';
 
 class CardModel {
@@ -88,34 +85,6 @@ class CardModel {
       );
 
   Map<String, dynamic> toJson() => {...toShareJson(), 'id': id, 'my': mine};
-
-  static CardModel? decode(String raw) {
-    try {
-      final text = raw.trim();
-      final hash = text.indexOf('#');
-      final data = hash == -1 ? text : text.substring(hash + 1);
-      if (data.isEmpty) return null;
-
-      final bytes = gzip.decode(base64Url.decode(base64Url.normalize(data)));
-      final json = jsonDecode(utf8.decode(bytes));
-      if (json is! Map<String, dynamic>) return null;
-
-      final card = CardModel.fromJson(
-        json,
-        id: DateTime.now().microsecondsSinceEpoch.toString(),
-        mine: false,
-      );
-
-      if (card.firstName.trim().isEmpty || card.lastName.trim().isEmpty) {
-        return null;
-      }
-      if (card.cardColor > 5 || card.cardColor < 0) return null;
-
-      return card;
-    } catch (_) {
-      return null;
-    }
-  }
 
   factory CardModel.fromJson(
     Map<String, dynamic> json, {

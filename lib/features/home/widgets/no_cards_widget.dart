@@ -1,14 +1,8 @@
 import 'dart:math' as math;
 import 'dart:ui';
 
-import 'package:business_card/core/constants/app_colors.dart';
-import 'package:business_card/core/cubit/theme_cubit.dart';
-import 'package:business_card/core/cubit/theme_state.dart';
-import 'package:business_card/core/helpers/theme_extension.dart';
 import 'package:business_card/core/routes/route_names.dart';
-import 'package:business_card/features/main_layout/cubit/cards_cubit.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:material_ui/material_ui.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
@@ -33,7 +27,7 @@ class NoCardsWidget extends StatelessWidget {
               fontSize: 28.sp,
               fontWeight: .w700,
               letterSpacing: -0.56,
-              color: AppAccent.primaryText(context),
+              color: const Color(0xFF15171A),
             ),
           ),
           Gap(9.37.h),
@@ -43,7 +37,7 @@ class NoCardsWidget extends StatelessWidget {
               'Add your details once, then share them with a QR code or a link. No account needed.',
               textAlign: .center,
               style: GoogleFonts.dmSans(
-                color: AppAccent.secoundaryText(context),
+                color: const Color(0xFF5F636A),
                 fontSize: 15.sp,
                 fontWeight: .normal,
               ),
@@ -71,9 +65,9 @@ class _NoCardsStack extends StatelessWidget {
           width: 250.w,
           height: 150.h,
           border: Border.all(
-            color: AppAccent.border(context).withValues(alpha: 0.6),
+            color: const Color(0xFFDDD7C8).withValues(alpha: 0.6),
           ),
-          color: AppAccent.noCard1(context).withValues(alpha: 0.6),
+          color: const Color(0xFFE5E1D8).withValues(alpha: 0.6),
           angel: -6,
           shadow: [
             BoxShadow(
@@ -89,9 +83,9 @@ class _NoCardsStack extends StatelessWidget {
           width: 240.w,
           height: 140.h,
           border: Border.all(
-            color: AppAccent.border(context).withValues(alpha: 0.8),
+            color: const Color(0xFFDDD7C8).withValues(alpha: 0.8),
           ),
-          color: AppAccent.noCard2(context).withValues(alpha: 0.8),
+          color: const Color(0xFFEAE5D8).withValues(alpha: 0.8),
           angel: 3,
           shadow: [
             BoxShadow(
@@ -147,6 +141,7 @@ class _EmptyCardWidget extends StatelessWidget {
 
   static const double _radius = 22;
   static const Color _stroke = Color(0x665F636A);
+  static const Color _fill = Color(0xB3FFFFFF);
 
   @override
   Widget build(BuildContext context) {
@@ -179,7 +174,7 @@ class _EmptyCardWidget extends StatelessWidget {
               gap: 4,
             ),
             child: Container(
-              color: AppAccent.noCard1(context),
+              color: _fill,
               padding: const EdgeInsets.all(16),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -189,19 +184,12 @@ class _EmptyCardWidget extends StatelessWidget {
                     height: 44,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: AppAccent.cardBg(context)
-                          .withValues(alpha: context.isDark ? 1.0 : 0.05),
-                      border: context.isDark
-                          ? Border.all(
-                              color: AppAccent.border(context)
-                                  .withValues(alpha: 0.1),
-                            )
-                          : null,
+                      color: const Color(0xFF15171A).withValues(alpha: 0.05),
                     ),
-                    child: Icon(
+                    child: const Icon(
                       Icons.add,
                       size: 24,
-                      color: AppAccent.primaryText(context),
+                      color: Color(0xFF15171A),
                     ),
                   ),
                   const SizedBox(height: 8),
@@ -211,7 +199,7 @@ class _EmptyCardWidget extends StatelessWidget {
                     style: GoogleFonts.dmSans(
                       fontSize: 13.sp,
                       fontWeight: FontWeight.w500,
-                      color: AppAccent.secoundaryText(context),
+                      color: const Color(0xFF5F636A),
                     ),
                   ),
                 ],
@@ -280,23 +268,31 @@ class _DashedRRectPainter extends CustomPainter {
 class _CreateCardButton extends StatelessWidget {
   const _CreateCardButton();
 
-  Future<void> _openCreate(BuildContext context) async {
-    final cubit = context.read<CardsCubit>();
-    final saved = await context.push<bool>(RouteNames.create);
-    if (saved == true) cubit.getCards();
-  }
-
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ThemeCubit, ThemeState>(
-      builder: (_, state) => TextButton.icon(
-        style: TextButton.styleFrom(
-          minimumSize: Size(double.infinity, 56.h),
-          backgroundColor: context.isDark
-              ? AppAccent.presets[state.colorIndex].dark
-              : AppAccent.presets[state.colorIndex].light,
-        ),
-        onPressed: () => _openCreate(context),
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(9999),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.1),
+            offset: const Offset(0, 10),
+            blurRadius: 15,
+            spreadRadius: -3,
+          ),
+          BoxShadow(
+            offset: const Offset(0, 4),
+            blurRadius: 6,
+            spreadRadius: -4,
+            color: Colors.black.withValues(alpha: 0.1),
+          ),
+        ],
+      ),
+      child: TextButton.icon(
+        style: TextButton.styleFrom(minimumSize: Size(double.infinity, 56.h)),
+        onPressed: () {
+          context.push(RouteNames.create);
+        },
         label: const Text('Create a card'),
         icon: Icon(Icons.add, size: 22.sp),
       ),
@@ -313,16 +309,12 @@ class _SafeRow extends StatelessWidget {
       mainAxisAlignment: .center,
       mainAxisSize: .min,
       children: [
-        Icon(
-          Iconsax.lock,
-          color: AppAccent.secoundaryText(context),
-          size: 12.sp,
-        ),
+        Icon(Iconsax.lock, color: const Color(0xFF5F636A), size: 12.sp),
         Gap(6.w),
         Text(
           'Saved only on this device',
           style: GoogleFonts.dmSans(
-            color: AppAccent.secoundaryText(context),
+            color: const Color(0xFF5F636A),
             fontSize: 12.sp,
             fontWeight: .normal,
           ),
