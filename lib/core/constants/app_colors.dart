@@ -13,6 +13,8 @@ class AppAccent extends Equatable {
   static const _firstCard = [Color(0xFFF9D9CD), Color(0xFF3A1E15)];
   static const _secondCard = [Color(0xFFD9E2FB), Color(0xFF1B2547)];
   static const _thirdCard = [Color(0xFFD6E9DE), Color(0xFF16302A)];
+  static const Color shadowColor = Color(0xFF15171A);
+  static const Color darkBorder = Color(0xFF2F3238);
 
   static Color firstCardBG(BuildContext context) =>
       context.isDark ? _firstCard[1] : _firstCard[0];
@@ -29,6 +31,7 @@ class AppAccent extends Equatable {
   static const _secoundaryText = [Color(0xFF5F636A), Color(0xFFA5A9B0)];
   static const _primaryText2 = [Color(0xFFF4F1EA), Color(0xFF0E0F11)];
   static const _unselectedTab = [Color(0xFF5F636A), Color(0xFFA5A9B0)];
+  static const _primaryText3 = [Color(0xFFFFFFFF), Color(0xFF1B0B05)];
 
   static Color unselectedTab(BuildContext context) =>
       context.isDark ? _unselectedTab[1] : _unselectedTab[0];
@@ -41,6 +44,9 @@ class AppAccent extends Equatable {
 
   static Color primaryText2(BuildContext context) =>
       context.isDark ? _primaryText2[1] : _primaryText2[0];
+
+  static Color primaryText3(BuildContext context) =>
+      context.isDark ? _primaryText3[1] : _primaryText3[0];
 
   static const _secondaryDot = [Color(0xFFCFC9BA), Color(0xFF3A3D44)];
 
@@ -63,11 +69,17 @@ class AppAccent extends Equatable {
 
   static const _cardBg2 = [Color(0xFFEEEADF), Color(0xFF262A30)];
 
+  static const _cardBg3 = [Color(0xFFF4F1EA), Color(0xFF262A30)];
+
+
   static Color cardBg(BuildContext context) =>
       context.isDark ? _cardBg[1] : _cardBg[0];
 
   static Color cardBg2(BuildContext context) =>
       context.isDark ? _cardBg2[1] : _cardBg2[0];
+
+  static Color cardBg3(BuildContext context) =>
+      context.isDark ? _cardBg3[1] : _cardBg3[0];
 
   static const _darkLerpedbg = [Color(0xFFEAE5D8), Color(0xFF22252A)];
 
