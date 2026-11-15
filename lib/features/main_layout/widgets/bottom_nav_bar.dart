@@ -1,4 +1,9 @@
-import 'package:flutter/material.dart';
+import 'package:business_card/core/constants/app_colors.dart';
+import 'package:business_card/core/cubit/theme_cubit.dart';
+import 'package:business_card/core/cubit/theme_state.dart';
+import 'package:business_card/core/helpers/theme_extension.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -88,15 +93,19 @@ class _PrimaryButton extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       behavior: HitTestBehavior.opaque,
-      child: Container(
-        width: 52.h,
-        height: 52.h,
-        decoration: const BoxDecoration(
-          color: Color(0xFFD93A10),
-          shape: BoxShape.circle,
+      child: BlocBuilder<ThemeCubit, ThemeState>(
+        builder: (_, state) => Container(
+          width: 52.h,
+          height: 52.h,
+          decoration: BoxDecoration(
+            color: context.isDark
+                ? AppAccent.presets[state.colorIndex].dark
+                : AppAccent.presets[state.colorIndex].light,
+            shape: BoxShape.circle,
+          ),
+          alignment: Alignment.center,
+          child: Icon(item.icon, size: 22, color: Colors.white),
         ),
-        alignment: Alignment.center,
-        child: Icon(item.icon, size: 22, color: Colors.white),
       ),
     );
   }
