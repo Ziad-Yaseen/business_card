@@ -46,7 +46,13 @@ class _CardsViewWidgetState extends State<CardsViewWidget> {
             padding: EdgeInsets.symmetric(horizontal: 24.w),
             child: AspectRatio(
               aspectRatio: 342 / 196,
-              child: MainCardPreview(card: cards.first, addSpacer: true),
+              child: GestureDetector(
+                behavior: HitTestBehavior.opaque,
+                onTap: () {
+                  context.pushNamed(RouteNames.preview, extra: cards.first);
+                },
+                child: MainCardPreview(card: cards.first, addSpacer: true),
+              ),
             ),
           )
         else ...[
@@ -57,7 +63,9 @@ class _CardsViewWidgetState extends State<CardsViewWidget> {
               itemCount: cards.length,
               itemBuilder: (context, i) =>
                   MainCardPreview(card: cards[i], addSpacer: true),
-              onCardTap: (i) {},
+              onCardTap: (i) {
+                context.pushNamed(RouteNames.preview, extra: cards[i]);
+              },
             ),
           ),
           Gap(20.h),
