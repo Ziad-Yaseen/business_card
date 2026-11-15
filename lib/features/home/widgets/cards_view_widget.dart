@@ -1,6 +1,7 @@
 import 'package:business_card/core/components/main_card_preview.dart';
 import 'package:business_card/core/routes/route_names.dart';
 import 'package:business_card/data/models/card_model.dart';
+import 'package:business_card/features/contacts/cubit/contacts_cubit.dart';
 import 'package:business_card/features/main_layout/cubit/cards_cubit.dart';
 import 'package:business_card/features/onboarding/widgets/page_dots.dart';
 import 'package:material_ui/material_ui.dart';
@@ -29,8 +30,12 @@ class _CardsViewWidgetState extends State<CardsViewWidget> {
 
   Future<void> _openCreate() async {
     final cubit = context.read<CardsCubit>();
+    final contactsCubit = context.read<ContactsCubit>();
     final saved = await context.push<bool>(RouteNames.create);
-    if (saved == true) cubit.getCards();
+    if (saved == true) {
+      cubit.getCards();
+      contactsCubit.loadContacts();
+    }
   }
 
   @override

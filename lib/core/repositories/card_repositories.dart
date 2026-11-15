@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:business_card/core/helpers/card_dao.dart';
+import 'package:business_card/core/helpers/sample_contacts.dart';
 import 'package:business_card/data/models/card_model.dart';
 
 class CardsRepository {
@@ -10,6 +11,19 @@ class CardsRepository {
 
   Future<List<CardModel>> getMyCards() => _dao.getAll(mine: true);
   Future<List<CardModel>> getContacts() => _dao.getAll(mine: false);
+
+  Future<List<CardModel>> getAllCards() async {
+    final list = await _dao.getAllCards();
+    if (list.isEmpty) {
+      final samples = getInitialSampleContacts();
+      for (final sample in samples) {
+        await _dao.save(sample);
+      }
+      return _dao.getAllCards();
+    }
+    return list;
+  }
+
   Future<CardModel?> getById(String id) => _dao.getById(id);
 
   Future<void> save(CardModel card) => _dao.save(card);

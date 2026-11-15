@@ -16,7 +16,15 @@ class CardsDao {
       _table,
       where: '${DBHelper.colMine} = ?',
       whereArgs: [mine ? 1 : 0],
-      orderBy: '${DBHelper.colCreatedAt} ASC',
+      orderBy: '${DBHelper.colCreatedAt} DESC',
+    );
+    return rows.map(cardFromRow).toList();
+  }
+
+  Future<List<CardModel>> getAllCards() async {
+    final rows = await _helper.query(
+      _table,
+      orderBy: '${DBHelper.colCreatedAt} DESC',
     );
     return rows.map(cardFromRow).toList();
   }
@@ -35,7 +43,10 @@ class CardsDao {
     _table,
     card.toRow(),
     keyColumn: DBHelper.colId,
-    insertOnly: {DBHelper.colCreatedAt: DateTime.now().millisecondsSinceEpoch},
+    insertOnly: {
+      DBHelper.colCreatedAt:
+          card.createdAt ?? DateTime.now().millisecondsSinceEpoch,
+    },
   );
 
   Future<void> delete(String id) =>
