@@ -82,7 +82,6 @@ class _PreviewViewState extends State<PreviewView> {
     );
   }
 
-  /// يفتح إيميل / اتصال / متصفح
   Future<void> _open(Uri uri) async {
     try {
       final ok = await launchUrl(uri, mode: LaunchMode.externalApplication);
@@ -158,31 +157,50 @@ class _PreviewViewState extends State<PreviewView> {
 
     return Scaffold(
       body: SafeArea(
-        child: SingleChildScrollView(
-          padding: EdgeInsets.symmetric(horizontal: 24.0.w),
-          child: Column(
-            children: [
-              Gap(8.h),
-              _PreviewAppBar(
+        child: Column(
+          children: [
+            Gap(8.h),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 24.0.w),
+              child: _PreviewAppBar(
                 isMine: _card.mine,
                 onEdit: _edit,
                 onMenu: _onMenu,
               ),
-              Gap(10.h),
-              MainCardPreview(card: _card),
-              Gap(10.h),
-              _QrCodeViewWidget(link: link, onCopy: () => _copy(link)),
-              Gap(14.h),
-              _PreviewActionButtons(
-                share: () => _share(link),
-                save: () => _saveQr(link),
-                copy: () => _copy(link),
+            ),
+            Gap(10.h),
+            Expanded(
+              child: ShaderMask(
+                blendMode: BlendMode.dstIn,
+                shaderCallback: (rect) => LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: const [Colors.transparent, Colors.black],
+                  stops: [0.0, (14.h / rect.height).clamp(0.0, 1.0)],
+                ).createShader(rect),
+                child: SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(),
+                  padding: EdgeInsets.fromLTRB(24.0.w, 14.h, 24.0.w, 0),
+                  child: Column(
+                    children: [
+                      MainCardPreview(card: _card),
+                      Gap(10.h),
+                      _QrCodeViewWidget(link: link, onCopy: () => _copy(link)),
+                      Gap(14.h),
+                      _PreviewActionButtons(
+                        share: () => _share(link),
+                        save: () => _saveQr(link),
+                        copy: () => _copy(link),
+                      ),
+                      Gap(22.h),
+                      _InThisCard(card: _card, onOpen: _open),
+                      Gap(24.h),
+                    ],
+                  ),
+                ),
               ),
-              Gap(22.h),
-              _InThisCard(card: _card, onOpen: _open),
-              Gap(24.h),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
@@ -278,10 +296,10 @@ class _PreviewAppBar extends StatelessWidget {
           ),
         ),
         const Spacer(),
-        // التعديل لكارداتي أنا بس
         if (isMine) ...[
           ItemContainer(
             child: IconButton(
+              tooltip: 'Edit',
               icon: const Icon(Iconsax.edit_2),
               onPressed: onEdit,
             ),
@@ -333,36 +351,52 @@ class _QRLinkWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final shown = link.replaceFirst(RegExp(r'^https?://'), '');
-    return Container(
-      padding: EdgeInsets.only(top: 5.h, bottom: 5.h, left: 14.w, right: 8.w),
-      decoration: BoxDecoration(
-        color: AppAccent.cardBg3(context),
-        borderRadius: BorderRadius.circular(14.r),
-        border: context.isDark ? Border.all(color: AppAccent.darkBorder) : null,
-      ),
-      child: Row(
-        mainAxisAlignment: .spaceBetween,
-        children: [
-          Expanded(
-            child: Text(
-              shown,
-              maxLines: 2,
-              overflow: .fade,
-              style: GoogleFonts.dmMono(
-                fontWeight: .w400,
-                fontSize: 13.sp,
-                color: AppAccent.primaryText(context),
+    return BlocBuilder<ThemeCubit, ThemeState>(
+      builder: (context, state) => Container(
+        padding: EdgeInsets.only(top: 5.h, bottom: 5.h, left: 14.w, right: 8.w),
+        decoration: BoxDecoration(
+          color: context.isDark
+              ? AppAccent.presets[state.colorIndex].dark.withValues(alpha: 0.15)
+              : AppAccent.presets[state.colorIndex].light.withValues(
+                  alpha: 0.15,
+                ),
+          borderRadius: BorderRadius.circular(14.r),
+          border: context.isDark
+              ? Border.all(color: AppAccent.darkBorder)
+              : null,
+        ),
+        child: Row(
+          mainAxisAlignment: .spaceBetween,
+          children: [
+            Expanded(
+              child: Text(
+                shown,
+                maxLines: 2,
+                overflow: .ellipsis,
+                style: GoogleFonts.dmMono(
+                  fontWeight: .w400,
+                  fontSize: 13.sp,
+                  color: AppAccent.primaryText(context),
+                ),
               ),
             ),
-          ),
-          IconButton(
-            style: IconButton.styleFrom(
-              backgroundColor: AppAccent.cardBg(context),
+            IconButton(
+              tooltip: 'Copy',
+              style: IconButton.styleFrom(
+                overlayColor: context.isDark
+                    ? AppAccent.presets[state.colorIndex].dark.withValues(
+                        alpha: 0.05,
+                      )
+                    : AppAccent.presets[state.colorIndex].light.withValues(
+                        alpha: 0.05,
+                      ),
+                backgroundColor: AppAccent.cardBg(context),
+              ),
+              onPressed: onCopy,
+              icon: Icon(Iconsax.copy, size: 18.sp),
             ),
-            onPressed: onCopy,
-            icon: Icon(Iconsax.copy, size: 18.sp),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

@@ -1,4 +1,8 @@
 import 'package:business_card/core/constants/app_colors.dart';
+import 'package:business_card/core/cubit/theme_cubit.dart';
+import 'package:business_card/core/cubit/theme_state.dart';
+import 'package:business_card/core/helpers/theme_extension.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
@@ -51,26 +55,30 @@ class MainTextField extends StatelessWidget {
           ],
         ),
         Gap(6.h),
-        TextFormField(
-          controller: controller,
-          initialValue: initialValue,
-          onChanged: onChanged,
-          validator: validator,
-          onTapOutside: (event) {
-            FocusManager.instance.primaryFocus?.unfocus();
-          },
-          cursorColor: AppAccent.primaryText(context),
-          cursorErrorColor: Colors.red,
-          enableInteractiveSelection: false,
-          style: GoogleFonts.dmSans(
-            fontSize: 16.sp,
-            color: AppAccent.primaryText(context),
-          ),
-          decoration: InputDecoration(
-            hintText: hint,
-            hintStyle: GoogleFonts.dmSans(
-              color: const Color(0xFF757575),
+        BlocBuilder<ThemeCubit, ThemeState>(
+          builder: (context, state) => TextFormField(
+            controller: controller,
+            initialValue: initialValue,
+            onChanged: onChanged,
+            validator: validator,
+            onTapOutside: (event) {
+              FocusManager.instance.primaryFocus?.unfocus();
+            },
+            cursorColor: context.isDark
+                ? AppAccent.presets[state.colorIndex].dark
+                : AppAccent.presets[state.colorIndex].light,
+            cursorErrorColor: Colors.red,
+            enableInteractiveSelection: false,
+            style: GoogleFonts.dmSans(
               fontSize: 16.sp,
+              color: AppAccent.primaryText(context),
+            ),
+            decoration: InputDecoration(
+              hintText: hint,
+              hintStyle: GoogleFonts.dmSans(
+                color: const Color(0xFF757575),
+                fontSize: 16.sp,
+              ),
             ),
           ),
         ),
