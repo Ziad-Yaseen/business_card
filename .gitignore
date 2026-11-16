@@ -86,3 +86,6 @@ firebase-debug.log*
 .env.*
 serviceAccountKey.json
 *-adminsdk-*.json
+
+
+card-upload.jks
