@@ -52,7 +52,7 @@ class AppRouter {
         name: RouteNames.create,
         pageBuilder: (context, state) => CustomTransitionPage(
           key: state.pageKey,
-          child: const CreateCardView(),
+          child: CreateCardView(card: state.extra as CardModel?),
           transitionsBuilder: (context, animation, secondaryAnimation, child) =>
               FadeTransition(opacity: animation, child: child),
         ),

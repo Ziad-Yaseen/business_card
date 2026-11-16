@@ -25,6 +25,36 @@ class CreateCardState {
     this.status = CreateStatus.editing,
   });
 
+  factory CreateCardState.fromCard(CardModel c) {
+    final profiles = <ProfileType, String>{
+      if ((c.instagram ?? '').trim().isNotEmpty)
+        ProfileType.instagram: c.instagram!,
+      if ((c.facebook ?? '').trim().isNotEmpty)
+        ProfileType.facebook: c.facebook!,
+      if ((c.tiktok ?? '').trim().isNotEmpty) ProfileType.tiktok: c.tiktok!,
+      if ((c.x ?? '').trim().isNotEmpty) ProfileType.x: c.x!,
+    };
+
+    return CreateCardState(
+      id: c.id,
+      colorIndex: c.cardColor,
+      pattern: c.pattern,
+      firstName: c.firstName,
+      lastName: c.lastName,
+      middleName: c.middleName ?? '',
+      nickName: c.nickName ?? '',
+      jobTitle: c.jobTitle,
+      company: c.company ?? '',
+      emails: c.email,
+      phones: c.phone,
+      linkedIn: c.linkedIn,
+      github: c.github ?? '',
+      portfolio: c.portfolio ?? '',
+      profiles: profiles,
+      more: c.more ?? const [],
+    );
+  }
+
   final String id;
   final int colorIndex;
   final CardPattern pattern;

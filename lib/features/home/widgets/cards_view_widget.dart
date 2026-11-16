@@ -33,6 +33,12 @@ class _CardsViewWidgetState extends State<CardsViewWidget> {
     if (saved == true) cubit.getCards();
   }
 
+  Future<void> _openPreview(CardModel card) async {
+    final cubit = context.read<CardsCubit>();
+    await context.pushNamed(RouteNames.preview, extra: card);
+    cubit.getCards();
+  }
+
   @override
   Widget build(BuildContext context) {
     final cards = widget.cards;
@@ -48,9 +54,7 @@ class _CardsViewWidgetState extends State<CardsViewWidget> {
               aspectRatio: 342 / 196,
               child: GestureDetector(
                 behavior: HitTestBehavior.opaque,
-                onTap: () {
-                  context.pushNamed(RouteNames.preview, extra: cards.first);
-                },
+                onTap: () => _openPreview(cards.first),
                 child: MainCardPreview(card: cards.first, addSpacer: true),
               ),
             ),
@@ -63,9 +67,7 @@ class _CardsViewWidgetState extends State<CardsViewWidget> {
               itemCount: cards.length,
               itemBuilder: (context, i) =>
                   MainCardPreview(card: cards[i], addSpacer: true),
-              onCardTap: (i) {
-                context.pushNamed(RouteNames.preview, extra: cards[i]);
-              },
+              onCardTap: (i) => _openPreview(cards[i]),
             ),
           ),
           Gap(20.h),

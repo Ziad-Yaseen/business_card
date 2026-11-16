@@ -2,15 +2,20 @@ import 'package:business_card/core/components/card_patterns.dart';
 import 'package:business_card/core/helpers/card_dao.dart';
 import 'package:business_card/core/helpers/database_helper.dart';
 import 'package:business_card/core/repositories/card_repositories.dart';
+import 'package:business_card/data/models/card_model.dart';
 import 'package:business_card/features/create_card/cubit/profile_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'create_card_state.dart';
 
 class CreateCardCubit extends Cubit<CreateCardState> {
-  CreateCardCubit()
+  CreateCardCubit({CardModel? card})
     : super(
-        CreateCardState(id: DateTime.now().microsecondsSinceEpoch.toString()),
+        card == null
+            ? CreateCardState(
+                id: DateTime.now().microsecondsSinceEpoch.toString(),
+              )
+            : CreateCardState.fromCard(card),
       );
 
   final CardsRepository _repository = CardsRepository(

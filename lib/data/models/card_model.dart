@@ -151,6 +151,7 @@ class CardModel {
   }
 
   CardModel copyWith({
+    String? id,
     int? cardColor,
     CardPattern? pattern,
     String? firstName,
@@ -171,7 +172,7 @@ class CardModel {
     List<String>? more,
   }) {
     return CardModel(
-      id: id,
+      id: id ?? this.id,
       cardColor: cardColor ?? this.cardColor,
       pattern: pattern ?? this.pattern,
       firstName: firstName ?? this.firstName,

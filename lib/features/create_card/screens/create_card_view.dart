@@ -4,6 +4,7 @@ import 'package:business_card/core/constants/app_colors.dart';
 import 'package:business_card/core/cubit/theme_cubit.dart';
 import 'package:business_card/core/cubit/theme_state.dart';
 import 'package:business_card/core/helpers/theme_extension.dart';
+import 'package:business_card/data/models/card_model.dart';
 import 'package:business_card/features/create_card/cubit/create_card_cubit.dart';
 import 'package:business_card/features/create_card/cubit/create_card_state.dart';
 import 'package:business_card/features/create_card/cubit/tab_cubit.dart';
@@ -20,14 +21,16 @@ import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class CreateCardView extends StatelessWidget {
-  const CreateCardView({super.key});
+  const CreateCardView({super.key, this.card});
+
+  final CardModel? card;
 
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (_) => TabCubit()),
-        BlocProvider(create: (_) => CreateCardCubit()),
+        BlocProvider(create: (_) => CreateCardCubit(card: card)),
       ],
       child: BlocListener<CreateCardCubit, CreateCardState>(
         listenWhen: (previous, current) => previous.status != current.status,
