@@ -121,12 +121,21 @@ class _PreviewViewState extends State<PreviewView> {
         content: const Text('This can’t be undone.'),
         actions: [
           TextButton(
+            style: TextButton.styleFrom(backgroundColor: Colors.transparent),
             onPressed: () => Navigator.of(ctx).pop(false),
             child: const Text('Cancel'),
           ),
-          TextButton(
-            onPressed: () => Navigator.of(ctx).pop(true),
-            child: const Text('Delete'),
+
+          BlocBuilder<ThemeCubit, ThemeState>(
+            builder: (context, state) => TextButton(
+              style: TextButton.styleFrom(
+                backgroundColor: context.isDark
+                    ? AppAccent.presets[state.colorIndex].dark
+                    : AppAccent.presets[state.colorIndex].light,
+              ),
+              onPressed: () => Navigator.of(ctx).pop(true),
+              child: const Text('Delete'),
+            ),
           ),
         ],
       ),

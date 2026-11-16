@@ -223,8 +223,12 @@ class CardFoundSheet extends StatelessWidget {
                   );
                 },
               ),
+              Gap(8.h),
               Center(
                 child: TextButton(
+                  style: TextButton.styleFrom(
+                    backgroundColor: Colors.transparent,
+                  ),
                   onPressed: () => Navigator.of(context).pop(false),
                   child: Text(
                     'Scan again',

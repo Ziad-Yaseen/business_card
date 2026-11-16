@@ -1,16 +1,12 @@
-import 'package:business_card/core/helpers/card_dao.dart';
-import 'package:business_card/core/helpers/database_helper.dart';
-import 'package:business_card/core/repositories/card_repositories.dart';
 import 'package:business_card/data/models/card_model.dart';
+import 'package:business_card/features/main_layout/cubit/cards_cubit.dart';
 import 'package:business_card/features/scan/cubit/scan_status.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ScanCubit extends Cubit<ScanState> {
-  ScanCubit(read) : super(const ScanState());
+  ScanCubit(this._cardsCubit) : super(const ScanState());
 
-  final CardsRepository _repository = CardsRepository(
-    CardsDao(DatabaseHelper.instance),
-  );
+  final CardsCubit _cardsCubit;
 
   void onDetect(List<String?> values) {
     if (state.status != ScanStatus.scanning) return;
@@ -38,7 +34,7 @@ class ScanCubit extends Cubit<ScanState> {
 
     emit(state.copyWith(status: ScanStatus.saving));
     try {
-      await _repository.save(card);
+      await _cardsCubit.save(card);
       emit(state.copyWith(status: ScanStatus.saved));
     } catch (_) {
       emit(state.copyWith(status: ScanStatus.failure));
