@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:business_card/core/helpers/card_dao.dart';
 import 'package:business_card/data/models/card_model.dart';
+import 'package:business_card/data/models/saved_contact.dart';
 
 class CardsRepository {
   const CardsRepository(this._dao);
@@ -10,6 +11,7 @@ class CardsRepository {
 
   Future<List<CardModel>> getMyCards() => _dao.getAll(mine: true);
   Future<List<CardModel>> getContacts() => _dao.getAll(mine: false);
+  Future<List<SavedContact>> getRecentContacts() => _dao.getRecentContacts();
   Future<CardModel?> getById(String id) => _dao.getById(id);
 
   Future<void> save(CardModel card) => _dao.save(card);

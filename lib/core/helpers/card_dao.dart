@@ -1,5 +1,6 @@
 import 'package:business_card/core/helpers/db_helper.dart';
 import 'package:business_card/data/models/card_model.dart';
+import 'package:business_card/data/models/saved_contact.dart';
 
 import 'card_mapper.dart';
 import 'database_helper.dart';
@@ -19,6 +20,22 @@ class CardsDao {
       orderBy: '${DBHelper.colCreatedAt} ASC',
     );
     return rows.map(cardFromRow).toList();
+  }
+
+  Future<List<SavedContact>> getRecentContacts() async {
+    final rows = await _helper.query(
+      _table,
+      where: '${DBHelper.colMine} = ?',
+      whereArgs: [0],
+      orderBy: '${DBHelper.colCreatedAt} DESC',
+    );
+    return rows.map((row) {
+      final millis = (row[DBHelper.colCreatedAt] as int?) ?? 0;
+      return SavedContact(
+        card: cardFromRow(row),
+        savedAt: DateTime.fromMillisecondsSinceEpoch(millis),
+      );
+    }).toList();
   }
 
   Future<CardModel?> getById(String id) async {
