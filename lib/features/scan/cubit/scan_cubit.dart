@@ -6,7 +6,7 @@ import 'package:business_card/features/scan/cubit/scan_status.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ScanCubit extends Cubit<ScanState> {
-  ScanCubit() : super(const ScanState());
+  ScanCubit(read) : super(const ScanState());
 
   final CardsRepository _repository = CardsRepository(
     CardsDao(DatabaseHelper.instance),

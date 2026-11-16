@@ -13,6 +13,7 @@ import 'package:business_card/features/create_card/widgets/create_card_app_bar.d
 import 'package:business_card/features/create_card/widgets/more_profiles_section.dart';
 import 'package:business_card/features/create_card/widgets/multi_field_section.dart';
 import 'package:business_card/features/create_card/widgets/pattern_selector.dart';
+import 'package:business_card/features/main_layout/cubit/cards_cubit.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -30,7 +31,10 @@ class CreateCardView extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (_) => TabCubit()),
-        BlocProvider(create: (_) => CreateCardCubit(card: card)),
+        BlocProvider(
+          create: (_) =>
+              CreateCardCubit(cards: context.read<CardsCubit>(), card: card),
+        ),
       ],
       child: BlocListener<CreateCardCubit, CreateCardState>(
         listenWhen: (previous, current) => previous.status != current.status,

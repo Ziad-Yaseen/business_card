@@ -1,3 +1,4 @@
+import 'package:business_card/features/main_layout/cubit/cards_cubit.dart';
 import 'package:business_card/features/main_layout/cubit/main_layout_nav_cubit.dart';
 import 'package:business_card/features/scan/cubit/scan_cubit.dart';
 import 'package:business_card/features/scan/cubit/scan_status.dart';
@@ -16,7 +17,10 @@ class ScanView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(create: (_) => ScanCubit(), child: const _ScanBody());
+    return BlocProvider(
+      create: (_) => ScanCubit(context.read<CardsCubit>()),
+      child: const _ScanBody(),
+    );
   }
 }
 

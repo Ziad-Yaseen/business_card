@@ -1,29 +1,41 @@
 import 'package:business_card/core/constants/app_colors.dart';
-import 'package:business_card/core/helpers/theme_extension.dart';
+import 'package:business_card/core/routes/route_names.dart';
 import 'package:business_card/data/models/card_model.dart';
 import 'package:business_card/data/models/saved_contact.dart';
-import 'package:business_card/features/contacts/cubit/contacts_cubit.dart';
+import 'package:business_card/features/main_layout/cubit/cards_cubit.dart';
+import 'package:business_card/features/main_layout/cubit/states/cards_states.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:material_ui/material_ui.dart';
 
-class ContactsView extends StatelessWidget {
+class ContactsView extends StatefulWidget {
   const ContactsView({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => ContactsCubit(),
-      child: const _ContactsBody(),
-    );
-  }
+  State<ContactsView> createState() => _ContactsViewState();
 }
 
-class _ContactsBody extends StatelessWidget {
-  const _ContactsBody();
+class _ContactsViewState extends State<ContactsView> {
+  String _query = '';
+
+  List<SavedContact> _filter(List<SavedContact> all) {
+    final q = _query.trim().toLowerCase();
+    if (q.isEmpty) return all;
+    return all.where((c) {
+      final card = c.card;
+      final text = [
+        card.fullName,
+        card.nickName ?? '',
+        card.jobTitle,
+        card.company ?? '',
+      ].join(' ').toLowerCase();
+      return text.contains(q);
+    }).toList();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,10 +43,11 @@ class _ContactsBody extends StatelessWidget {
       bottom: false,
       child: SingleChildScrollView(
         padding: EdgeInsets.fromLTRB(24.w, 16.h, 24.w, 120.h),
-        child: BlocBuilder<ContactsCubit, ContactsState>(
+        child: BlocBuilder<CardsCubit, CardsStates>(
           builder: (context, state) {
-            final count = state.all.length;
-            final visible = state.visible;
+            final all = context.read<CardsCubit>().contacts;
+            final count = all.length;
+            final visible = _filter(all);
 
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -57,14 +70,14 @@ class _ContactsBody extends StatelessWidget {
                   ),
                 ),
                 Gap(20.h),
-                const _SearchField(),
+                _SearchField(onChanged: (v) => setState(() => _query = v)),
                 Gap(24.h),
-                if (state.status == ContactsStatus.loading)
+                if (state is LoadingCards)
                   Padding(
                     padding: EdgeInsets.symmetric(vertical: 40.h),
                     child: const Center(child: CircularProgressIndicator()),
                   )
-                else if (state.status == ContactsStatus.failure)
+                else if (state is FaildCardsState)
                   const _Message('Could not load your contacts')
                 else ...[
                   if (visible.isNotEmpty) ...[
@@ -80,9 +93,7 @@ class _ContactsBody extends StatelessWidget {
                     Gap(10.h),
                     _ContactsGroup(items: visible),
                   ] else if (count > 0)
-                    const _Message('No matches')
-                  else
-                    const SizedBox.shrink(),
+                    const _Message('No matches'),
                   Gap(16.h),
                   const _ScanHint(),
                 ],
@@ -117,7 +128,8 @@ class _Message extends StatelessWidget {
 }
 
 class _SearchField extends StatelessWidget {
-  const _SearchField();
+  const _SearchField({required this.onChanged});
+  final ValueChanged<String> onChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -128,8 +140,9 @@ class _SearchField extends StatelessWidget {
     );
 
     return TextField(
-      onChanged: context.read<ContactsCubit>().search,
+      onChanged: onChanged,
       textInputAction: TextInputAction.search,
+      onTapOutside: (_) => FocusManager.instance.primaryFocus?.unfocus(),
       style: GoogleFonts.dmSans(
         fontSize: 15.sp,
         color: AppAccent.primaryText(context),
@@ -197,7 +210,7 @@ class _ContactTile extends StatelessWidget {
     return Material(
       color: Colors.transparent,
       child: InkWell(
-        onTap: null,
+        onTap: () => context.pushNamed(RouteNames.preview, extra: card),
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 12.h),
           child: Row(

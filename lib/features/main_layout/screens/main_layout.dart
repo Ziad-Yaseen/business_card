@@ -1,6 +1,5 @@
 import 'package:business_card/features/contacts/screens/contacts_view.dart';
 import 'package:business_card/features/home/screens/home_view.dart';
-import 'package:business_card/features/main_layout/cubit/cards_cubit.dart';
 import 'package:business_card/features/main_layout/cubit/main_layout_nav_cubit.dart';
 import 'package:business_card/features/main_layout/widgets/bottom_nav_bar.dart';
 import 'package:business_card/features/scan/screens/scan_view.dart';
@@ -14,11 +13,9 @@ class MainLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider(create: (_) => MainLayoutNavCubit()),
-        BlocProvider(create: (_) => CardsCubit()),
-      ],
+    return BlocProvider(
+      create: (_) => MainLayoutNavCubit(),
+
       child: const _MainLayoutScaffold(),
     );
   }
