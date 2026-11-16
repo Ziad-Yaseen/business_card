@@ -1,3 +1,4 @@
+import 'package:business_card/core/helpers/backup_service.dart';
 import 'package:business_card/core/helpers/card_dao.dart';
 import 'package:business_card/core/helpers/database_helper.dart';
 import 'package:business_card/core/repositories/card_repositories.dart';
@@ -10,6 +11,8 @@ class CardsCubit extends Cubit<CardsStates> {
   final CardsRepository repository = CardsRepository(
     CardsDao(DatabaseHelper.instance),
   );
+
+  late final BackupService _backup = BackupService(repository);
 
   int numberOfCards = 0;
 
@@ -48,4 +51,12 @@ class CardsCubit extends Cubit<CardsStates> {
       save(card.copyWith(id: CardsRepository.newId()));
 
   Future<CardModel?> byId(String id) => repository.getById(id);
+
+  Future<BackupResult> backup() => _backup.backup();
+
+  Future<BackupResult> restore() async {
+    final result = await _backup.restore();
+    if (result.status == BackupStatus.ok) await getCards();
+    return result;
+  }
 }

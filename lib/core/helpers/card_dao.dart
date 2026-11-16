@@ -29,13 +29,42 @@ class CardsDao {
       whereArgs: [0],
       orderBy: '${DBHelper.colCreatedAt} DESC',
     );
-    return rows.map((row) {
-      final millis = (row[DBHelper.colCreatedAt] as int?) ?? 0;
-      return SavedContact(
-        card: cardFromRow(row),
-        savedAt: DateTime.fromMillisecondsSinceEpoch(millis),
+    return rows.map(_withDate).toList();
+  }
+
+  Future<List<SavedContact>> getAllWithDates() async {
+    final result = <SavedContact>[];
+    for (final mine in [1, 0]) {
+      final rows = await _helper.query(
+        _table,
+        where: '${DBHelper.colMine} = ?',
+        whereArgs: [mine],
+        orderBy: '${DBHelper.colCreatedAt} ASC',
       );
-    }).toList();
+      result.addAll(rows.map(_withDate));
+    }
+    return result;
+  }
+
+  Future<void> restoreAll(List<SavedContact> items) async {
+    for (final item in items) {
+      await _helper.upsert(
+        _table,
+        item.card.toRow(),
+        keyColumn: DBHelper.colId,
+        insertOnly: {
+          DBHelper.colCreatedAt: item.savedAt.millisecondsSinceEpoch,
+        },
+      );
+    }
+  }
+
+  SavedContact _withDate(Map<String, Object?> row) {
+    final millis = (row[DBHelper.colCreatedAt] as int?) ?? 0;
+    return SavedContact(
+      card: cardFromRow(row),
+      savedAt: DateTime.fromMillisecondsSinceEpoch(millis),
+    );
   }
 
   Future<CardModel?> getById(String id) async {

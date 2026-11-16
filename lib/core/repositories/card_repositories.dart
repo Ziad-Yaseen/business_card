@@ -12,6 +12,8 @@ class CardsRepository {
   Future<List<CardModel>> getMyCards() => _dao.getAll(mine: true);
   Future<List<CardModel>> getContacts() => _dao.getAll(mine: false);
   Future<List<SavedContact>> getRecentContacts() => _dao.getRecentContacts();
+  Future<List<SavedContact>> getAllForBackup() => _dao.getAllWithDates();
+  Future<void> restoreAll(List<SavedContact> items) => _dao.restoreAll(items);
   Future<CardModel?> getById(String id) => _dao.getById(id);
 
   Future<void> save(CardModel card) => _dao.save(card);
