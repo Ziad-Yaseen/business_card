@@ -18,6 +18,12 @@ class MainTextField extends StatelessWidget {
     this.hint,
     this.onChanged,
     this.initialValue,
+    this.obscureText = false,
+    this.keyboardType,
+    this.textInputAction,
+    this.onFieldSubmitted,
+    this.suffixIcon,
+    this.enableInteractiveSelection = false,
   });
 
   final String title;
@@ -27,6 +33,13 @@ class MainTextField extends StatelessWidget {
   final String? hint;
   final ValueChanged<String>? onChanged;
   final String? initialValue;
+
+  final bool obscureText;
+  final TextInputType? keyboardType;
+  final TextInputAction? textInputAction;
+  final ValueChanged<String>? onFieldSubmitted;
+  final Widget? suffixIcon;
+  final bool enableInteractiveSelection;
 
   @override
   Widget build(BuildContext context) {
@@ -61,6 +74,10 @@ class MainTextField extends StatelessWidget {
             initialValue: initialValue,
             onChanged: onChanged,
             validator: validator,
+            obscureText: obscureText,
+            keyboardType: keyboardType,
+            textInputAction: textInputAction,
+            onFieldSubmitted: onFieldSubmitted,
             onTapOutside: (event) {
               FocusManager.instance.primaryFocus?.unfocus();
             },
@@ -68,13 +85,14 @@ class MainTextField extends StatelessWidget {
                 ? AppAccent.presets[state.colorIndex].dark
                 : AppAccent.presets[state.colorIndex].light,
             cursorErrorColor: Colors.red,
-            enableInteractiveSelection: false,
+            enableInteractiveSelection: enableInteractiveSelection,
             style: GoogleFonts.dmSans(
               fontSize: 16.sp,
               color: AppAccent.primaryText(context),
             ),
             decoration: InputDecoration(
               hintText: hint,
+              suffixIcon: suffixIcon,
               hintStyle: GoogleFonts.dmSans(
                 color: const Color(0xFF757575),
                 fontSize: 16.sp,
