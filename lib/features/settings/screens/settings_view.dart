@@ -21,7 +21,7 @@ class SettingsView extends StatelessWidget {
             children: [
               const SettingsAppBar(),
               Gap(26.h),
-              ApperianceWidget()
+              const ApperianceWidget(),
             ],
           ),
         ),
