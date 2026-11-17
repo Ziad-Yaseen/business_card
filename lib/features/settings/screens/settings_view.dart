@@ -25,6 +25,7 @@ class SettingsView extends StatelessWidget {
               Gap(26.h),
               Expanded(
                 child: SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(),
                   child: Column(
                     children: [
                       const ApperianceWidget(),
