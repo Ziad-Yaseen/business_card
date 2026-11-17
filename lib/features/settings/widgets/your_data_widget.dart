@@ -41,7 +41,7 @@ class _YourDataWidgetState extends State<YourDataWidget> {
     switch (result.status) {
       case BackupStatus.ok:
         text = isBackup
-            ? 'Backup saved to Downloads (${result.count} cards)'
+            ? 'Backup saved to cards/backup (${result.count} cards)'
             : 'Restored ${result.count} cards';
       case BackupStatus.noPermission:
         text = 'Allow access to all files to use backups';
@@ -50,7 +50,7 @@ class _YourDataWidgetState extends State<YourDataWidget> {
           onPressed: openAppSettings,
         );
       case BackupStatus.notFound:
-        text = 'No backup found in Downloads';
+        text = 'No backup found in cards/backup';
       case BackupStatus.invalid:
         text = 'The backup file is not valid';
       case BackupStatus.failed:

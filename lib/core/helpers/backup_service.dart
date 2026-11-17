@@ -1,10 +1,10 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:business_card/core/helpers/storage_paths.dart';
 import 'package:business_card/core/repositories/card_repositories.dart';
 import 'package:business_card/data/models/card_model.dart';
 import 'package:business_card/data/models/saved_contact.dart';
-import 'package:permission_handler/permission_handler.dart';
 
 enum BackupStatus { ok, noPermission, notFound, invalid, failed }
 
@@ -22,18 +22,10 @@ class BackupService {
   final CardsRepository _repository;
 
   static const fileName = 'card_backup.json';
-  static final File _file = File('/storage/emulated/0/Download/$fileName');
-
-  Future<bool> _ensurePermission() async {
-    if (!Platform.isAndroid) return false;
-    var status = await Permission.manageExternalStorage.request();
-    if (status.isGranted) return true;
-    status = await Permission.storage.request();
-    return status.isGranted;
-  }
+  static final File _file = File('${StoragePaths.backup}/$fileName');
 
   Future<BackupResult> backup() async {
-    if (!await _ensurePermission()) {
+    if (!await StoragePaths.ensurePermission()) {
       return const BackupResult(BackupStatus.noPermission);
     }
     try {
@@ -47,6 +39,7 @@ class BackupService {
             {...i.card.toJson(), 'savedAt': i.savedAt.millisecondsSinceEpoch},
         ],
       };
+      await StoragePaths.dir(StoragePaths.backup);
       if (await _file.exists()) await _file.delete();
       await _file.writeAsString(jsonEncode(data), flush: true);
       return BackupResult(BackupStatus.ok, items.length);
@@ -56,7 +49,7 @@ class BackupService {
   }
 
   Future<BackupResult> restore() async {
-    if (!await _ensurePermission()) {
+    if (!await StoragePaths.ensurePermission()) {
       return const BackupResult(BackupStatus.noPermission);
     }
     try {

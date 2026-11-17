@@ -1,2 +1,1 @@
-const String shareBaseUrl =
-    'https://ziad-yaseen.github.io/business-card-web-view/';
+const String shareBaseUrl = 'https://cardy-z.vercel.app/';

@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:business_card/core/components/item_container.dart';
 import 'package:business_card/core/components/main_back_button.dart';
 import 'package:business_card/core/components/main_card_preview.dart';
@@ -7,6 +5,7 @@ import 'package:business_card/core/constants/app_colors.dart';
 import 'package:business_card/core/cubit/theme_cubit.dart';
 import 'package:business_card/core/cubit/theme_state.dart';
 import 'package:business_card/core/helpers/card_share.dart';
+import 'package:business_card/core/helpers/qr_image_service.dart';
 import 'package:business_card/core/helpers/theme_extension.dart';
 import 'package:business_card/core/routes/route_names.dart';
 import 'package:business_card/data/models/card_model.dart';
@@ -17,6 +16,7 @@ import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:material_ui/material_ui.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:gap/gap.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:qr_flutter/qr_flutter.dart';
@@ -51,35 +51,42 @@ class _PreviewViewState extends State<PreviewView> {
   }
 
   Future<void> _share(String link) async {
+    final bytes = await QrImageService.render(link);
     await SharePlus.instance.share(
-      ShareParams(text: link, subject: _card.fullName),
+      ShareParams(
+        text: link,
+        subject: _card.fullName,
+        files: bytes == null
+            ? null
+            : [XFile.fromData(bytes, mimeType: 'image/png')],
+        fileNameOverrides: bytes == null
+            ? null
+            : [QrImageService.fileName(_card.fullName)],
+      ),
     );
   }
 
   Future<void> _saveQr(String link) async {
-    final painter = QrPainter(
-      data: link,
-      version: QrVersions.auto,
-      errorCorrectionLevel: QrErrorCorrectLevel.M,
-      gapless: true,
-      eyeStyle: const QrEyeStyle(
-        eyeShape: QrEyeShape.square,
-        color: Color(0xFF15171A),
-      ),
-      dataModuleStyle: const QrDataModuleStyle(
-        dataModuleShape: QrDataModuleShape.square,
-        color: Color(0xFF15171A),
-      ),
-    );
-    final data = await painter.toImageData(1024, format: ImageByteFormat.png);
-    if (data == null) return;
-    final bytes = data.buffer.asUint8List();
-    await SharePlus.instance.share(
-      ShareParams(
-        files: [XFile.fromData(bytes, mimeType: 'image/png')],
-        fileNameOverrides: ['card-qr.png'],
-      ),
-    );
+    final result = await QrImageService.save(link, _card.fullName);
+    if (!mounted) return;
+    switch (result.status) {
+      case QrSaveStatus.ok:
+        _snack('Saved to cards/my cards');
+      case QrSaveStatus.noPermission:
+        ScaffoldMessenger.of(context)
+          ..hideCurrentSnackBar()
+          ..showSnackBar(
+            const SnackBar(
+              content: Text('Allow access to all files to save the QR'),
+              action: SnackBarAction(
+                label: 'Settings',
+                onPressed: openAppSettings,
+              ),
+            ),
+          );
+      case QrSaveStatus.failed:
+        _snack('Could not save the QR');
+    }
   }
 
   Future<void> _open(Uri uri) async {
@@ -511,9 +518,6 @@ class _PreviewActionButtons extends StatelessWidget {
   }
 }
 
-// ───────────────────────── In this card ─────────────────────────
-
-/// يحوّل اللي المستخدم كتبه (لينك كامل / من غير https / @handle) لرابط ويب
 Uri? _webUri(String? raw, String base) {
   var v = (raw ?? '').trim();
   if (v.isEmpty) return null;
@@ -635,12 +639,9 @@ class _InfoRow {
   final String label;
   final String? value;
 
-  /// mailto: / tel: / https:  (null = مش قابل للفتح)
   final Uri? uri;
 }
 
-/// كارت واحد فيه كل الصفوف بينها خطوط فاصلة (زي الديزاين)
-/// لون الحواف والخطوط والدواير بيتغير حسب الثيم واللون المختار
 class _InfoGroup extends StatelessWidget {
   const _InfoGroup({required this.rows, required this.onOpen});
   final List<_InfoRow> rows;
